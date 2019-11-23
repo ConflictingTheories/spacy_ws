@@ -80,6 +80,17 @@
         </li>
     </ul>
 
+    <!-- DATA SET LOADED -->
+    <ul id="training-list" class="sidenav collection no-print" style="transform: translateX(-105%);">
+        <li class="logo">
+            <a href="/" class="brand-logo">
+                <h4 style="font-weight:bold;color:#6ad;">
+                    Data Sets
+                </h4>
+            </a>
+        </li>
+    </ul>
+
     <!-- TRAINING PORTAL-->
     <div id="train-tab" style="display:block">
         <div class="row">
@@ -88,68 +99,65 @@
                 <div class="row">
                     <div onclick="getWordOnClick('training-txt')" contenteditable="true" id="training-txt" class="editable materialize-textarea"></div>
                 </div>
-                <div class="row">
-                    <input placeholder="https://... .csv" class="input-field col s6" type="text" id="ext-link">
-                    <input class="input-field col s6" type="file" id="local-link">
-                </div>
-                <div class="row">
-                    <button class="btn" onclick="fetchRemoteCSV('ext-link','training-list','training-txt')">Fetch Remote CSV</button>            
-                    <button class="btn" onclick="localCSV('local-link','training-list','training-txt')">Load Local CSV</button>
-                    <a href="#" class="btn sidenav-trigger" data-target="training-list" >Show Loaded Datasets</a>    
-                </div>
-
-                <ul id="training-list" class="sidenav collection no-print" style="transform: translateX(-105%);">
-                    <li class="logo">
-                        <a href="/" class="brand-logo">
-                            <h4 style="font-weight:bold;color:#6ad;">
-                                Data Sets
-                            </h4>
-                        </a>
-                    </li>
-                </ul>
-                
             </div>
             <!-- TOOLS / UTILITIES COLUMN -->
             <div style="padding-left:2em;line-height:2em;" class="col s12 m6 l6">
-                <h5>
-                    TRAINING ENTITIES
-                </h5>
-                <div class="col s12">
                     <div class="row">
-                        <div class="col s12">
-                            <div class="row">
-                                <button class="btn" onclick="redactSelection('people','redaction-list', 'training-txt')">People</button>
-                                <button class="btn" onclick="redactSelection('racial','redaction-list', 'training-txt')">Racial</button>
-                                <button class="btn" onclick="redactSelection('address','redaction-list', 'training-txt')">Address</button>
-                                <button class="btn" onclick="redactSelection('phone','redaction-list', 'training-txt')">Phone</button>
-                                <button class="btn" onclick="redactSelection('email','redaction-list', 'training-txt')">Email</button>
-                                <button class="btn" onclick="redactSelection('title','redaction-list', 'training-txt')">Title</button>
-                            </div>
-                            <h4>List of Training Entities</h4>
-                            <ul id="redaction-list"></ul>
-                            <button class="btn" onclick="saveRedaction('training-txt','redaction-list')">Submit Training</button>
-                        </div>
-                    </div>
-                    <div class="seperator"></div>
-                    <div class="row">
-                        <div class="col s12">
-                            <div class="row">
+                            <h5>
+                                    Load Data
+                                </h5>
+                                <div class="row">
+                                    <input placeholder="https://... .csv" class="input-field col s6" type="text" id="ext-link">
+                                    <span class="col s6"><button class="btn" onclick="fetchRemoteCSV('ext-link','training-list','training-txt')">Fetch Remote CSV</button></span>
+                                </div>            
+                                <div class="row">
+                                    <input class="input-field col s6" type="file" id="local-link">
+                                    <span class="col s6"><button class="btn" onclick="localCSV('local-link','training-list','training-txt')">Load Local CSV</button></span>
+                                </div>
+                                <hr/>
+                                <div class="row">
+                                    <a href="#" class="btn sidenav-trigger" data-target="training-list" >Show Loaded Datasets</a>    
+                                </div>
+                        </div>    
+                <div class="row">
+                            <ul class="tabs col s12">
+                                <li class="tab"><a href="#redact">Train Redaction</a></li>
+                                <li class="tab"><a href="#report">Train Reporting</a></li>
+                            </ul>
+                            <div id="report" class="col s12">
+                                <h5>
+                                    Report Training
+                                </h5>
+                                <div class="row">
                                     <button class="btn" onclick="reportSelection('perpetrator','report-list', 'training-txt')">Perpetrator</button>
                                     <button class="btn" onclick="reportSelection('victim','report-list', 'training-txt')">Victim</button>
                                     <button class="btn" onclick="reportSelection('location','report-list', 'training-txt')">Location</button>
                                     <button class="btn" onclick="reportSelection('time','report-list', 'training-txt')">Time</button>
                                     <button class="btn" onclick="reportSelection('weapon','report-list', 'training-txt')">Weapon</button>
+                                    <button class="btn red" onclick="saveReport('training-txt','report-list')">Submit Training</button>
+                                </div>
+                                <h4>List of Training Entities</h4>
+                                <ul id="report-list"></ul>
                             </div>
-                            <h4>List of Training Entities</h4>
-                            <ul id="report-list"></ul>
-                            <button class="btn" onclick="saveReport('training-txt','report-list')">Submit Training</button>
+                            <div id="redact" class="col s12">
+                                <h5>
+                                    Redaction Training
+                                </h5>
+                                <div class="row">
+                                    <button class="btn" onclick="redactSelection('people','redaction-list', 'training-txt')">People</button>
+                                    <button class="btn" onclick="redactSelection('racial','redaction-list', 'training-txt')">Racial</button>
+                                    <button class="btn" onclick="redactSelection('address','redaction-list', 'training-txt')">Address</button>
+                                    <button class="btn" onclick="redactSelection('phone','redaction-list', 'training-txt')">Phone</button>
+                                    <button class="btn" onclick="redactSelection('email','redaction-list', 'training-txt')">Email</button>
+                                    <button class="btn" onclick="redactSelection('title','redaction-list', 'training-txt')">Title</button>
+                                    <button class="btn red" onclick="saveRedaction('training-txt','redaction-list')">Submit Training</button>
+                                </div>
+                                <h4>List of Training Entities</h4>
+                                <ul id="redaction-list"></ul>
+                            </div>
                         </div>
-                    </div>
-                </div>
-
             </div>
         </div>
-        <br>
     </div>
 
     <!-- TESTING PORTAL-->
@@ -183,15 +191,18 @@
     // Nav / Collapse
     document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('.collapsible');
-        var instances = M.Collapsible.init(elems, {});
-    });
-    document.addEventListener('DOMContentLoaded', function() {
+        var collapsibleInstance = M.Collapsible.init(elems, {});
+        
         var elems = document.querySelectorAll('.sidenav');
-        var instances = M.Sidenav.init(elems, {});
+        var sidenaveInstances = M.Sidenav.init(elems, {});
+
     });
 
     // On Load
     $(document).ready(function() {
+
+        $('.tabs').tabs();
+        
         // GENERAL / NAVIGATION FUNCTIONS
         // ------------------------------
         let preloaded = '<%=preloaded%>';

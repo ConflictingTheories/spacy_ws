@@ -374,7 +374,7 @@ function saveRedaction(textId,listId){
         text: document.getElementById(textId).innerText,
         entities: redactionList.map(x=>x)
     }
-    redactionSubmission.push[payload];
+    redactionSubmission.push(payload);
     clearRedactions(listId)
     console.log(redactionSubmission)
 }
@@ -385,7 +385,7 @@ function saveReport(textId,listId){
         text: document.getElementById(textId).innerText,
         entities: reportingList.map(x=>x)
     }
-    reportingSubmission.push[payload];
+    reportingSubmission.push(payload);
     clearReporting(listId);
     console.log(reportingSubmission)
 }
