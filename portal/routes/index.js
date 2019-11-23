@@ -43,7 +43,7 @@ router.get('/train', function(req, res, next) {
 router.get('/test', function(req, res, next) {
     res.render('index', {
         title: 'NLP Portal - Testing Platform',
-        preloaded: false,
+        preloaded: true,
         type: 'test',
         details: {}
     });
