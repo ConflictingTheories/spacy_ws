@@ -83,11 +83,33 @@
     <!-- TRAINING PORTAL-->
     <div id="train-tab" style="display:block">
         <div class="row">
+            <!-- TEXT ENTRY COLUMN -->
             <div style="padding-left:2em" class="col s12 m6 l6">
                 <div class="row">
                     <div onclick="getWordOnClick('training-txt')" contenteditable="true" id="training-txt" class="editable materialize-textarea"></div>
                 </div>
+                <div class="row">
+                    <input placeholder="https://... .csv" class="input-field col s6" type="text" id="ext-link">
+                    <input class="input-field col s6" type="file" id="local-link">
+                </div>
+                <div class="row">
+                    <button class="btn" onclick="fetchRemoteCSV('ext-link','training-list','training-txt')">Fetch Remote CSV</button>            
+                    <button class="btn" onclick="localCSV('local-link','training-list','training-txt')">Load Local CSV</button>
+                    <a href="#" class="btn sidenav-trigger" data-target="training-list" >Show Loaded Datasets</a>    
+                </div>
+
+                <ul id="training-list" class="sidenav collection no-print" style="transform: translateX(-105%);">
+                    <li class="logo">
+                        <a href="/" class="brand-logo">
+                            <h4 style="font-weight:bold;color:#6ad;">
+                                Data Sets
+                            </h4>
+                        </a>
+                    </li>
+                </ul>
+                
             </div>
+            <!-- TOOLS / UTILITIES COLUMN -->
             <div style="padding-left:2em;line-height:2em;" class="col s12 m6 l6">
                 <h5>
                     TRAINING ENTITIES

@@ -15,6 +15,67 @@
 const redactionList = [];
 const reportingList = [];
 
+function loadRow(button, textId){
+    let newText = button.innerText;
+    document.getElementById(textId).innerText = newText
+}
+
+function localCSV(inputId, tableId, textId){
+    var dvCSV = document.getElementById(tableId);
+    var fileUpload = document.getElementById(inputId);
+    var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.csv|.txt)$/;
+    if (regex.test(fileUpload.value.toLowerCase())) {
+        if (typeof (FileReader) != "undefined") {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                dvCSV.innerHTML = "";
+                console.log('LOADED', e)
+                var rows = e.target.result.split("\n");
+                for (var i = 0; i < rows.length; i++) {
+                    var cells = rows[i].split(",");
+                    console.log('Cells,',cells)
+                    console.log('Rows', rows);
+                    if (cells.length > 0) {
+                        for (var j = 0; j < cells.length; j++) {
+                            var li = document.createElement("li");
+                            li.classList.add('collection-item')
+                            li.innerHTML = `<a style="text-overflow:ellipsis;white-space:nowrap;overflow:hidden;cursor:pointer;" onclick="loadRow(this,'${textId}')">${cells[j]}</a></div>`;
+                            dvCSV.appendChild(li);
+                        }
+                    }
+                }
+            }
+            reader.readAsText(fileUpload.files[0]);
+        } else {
+            alert("This browser does not support HTML5.");
+        }
+    } else {
+        alert("Please upload a valid CSV file.");
+    }
+}
+
+function remoteRemoteCSV(inputId, textId){
+
+    let url = document.getElementById(inputId).value;
+
+    $.ajaxPrefilter( 'script', function( options ) {
+        options.crossDomain = true;
+    });
+
+    $.ajax({
+        type: "GET",
+        url: url,
+        dataType: "script",
+        success: function(data) {
+            console.log(data);
+        },
+        error: function (request, status, error) {
+            console.error(error);
+        }
+    });
+
+}
+
 function clearRedactions(){
     redactionList = [];
 }
