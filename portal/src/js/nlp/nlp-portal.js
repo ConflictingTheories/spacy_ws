@@ -12,14 +12,20 @@
 ** ------------------------------------------ **
 \*                                            */
 
-const redactionList = [];
-const reportingList = [];
+// Multi-Data Set
+let redactionSubmission = [];
+let reportingSubmission = [];
+// Single Data Set
+let redactionList = [];
+let reportingList = [];
 
+// Load Row from Data
 function loadRow(button, textId){
     let newText = button.innerText;
     document.getElementById(textId).innerText = newText
 }
 
+// Load Local CSV
 function localCSV(inputId, tableId, textId){
     var dvCSV = document.getElementById(tableId);
     var fileUpload = document.getElementById(inputId);
@@ -54,6 +60,7 @@ function localCSV(inputId, tableId, textId){
     }
 }
 
+// Fetch Remote CSV [WIP]
 function remoteRemoteCSV(inputId, textId){
 
     let url = document.getElementById(inputId).value;
@@ -76,14 +83,7 @@ function remoteRemoteCSV(inputId, textId){
 
 }
 
-function clearRedactions(){
-    redactionList = [];
-}
-
-function clearReporting(){
-    reportingList = [];
-}
-
+// Clear Text Selection
 function clearSelection(){
     if (window.getSelection) {
         if (window.getSelection().empty) {  // Chrome
@@ -111,6 +111,7 @@ function getSelectionText(textId) {
     }
 }
 
+// Select Individual Word on Click
 function getWordOnClick(textId){
   
     let text = document.getElementById(textId).innerText;
@@ -355,19 +356,36 @@ function reportSelection(type, listId, textId) {
     }
 }
 
-
-function saveRedaction(textId){
-    let payload = {
-        text: document.getElementById(textId).innerText,
-        entities: redactionList
-    }
-    console.log(payload)
+// Clear List of Current Data Set
+function clearRedactions(listId){
+    redactionList = [];
+    document.getElementById(listId).innerHTML = '';
 }
 
-function saveReport(textId){
+// Clear List of Current Data Set
+function clearReporting(listId){
+    reportingList = [];
+    document.getElementById(listId).innerHTML = '';
+}
+
+// Save Current Data Set Learning
+function saveRedaction(textId,listId){
     let payload = {
         text: document.getElementById(textId).innerText,
-        entities: reportingList
+        entities: redactionList.map(x=>x)
     }
-    console.log(payload)
+    redactionSubmission.push[payload];
+    clearRedactions(listId)
+    console.log(redactionSubmission)
+}
+
+// Save Data Set Learning
+function saveReport(textId,listId){
+    let payload = {
+        text: document.getElementById(textId).innerText,
+        entities: reportingList.map(x=>x)
+    }
+    reportingSubmission.push[payload];
+    clearReporting(listId);
+    console.log(reportingSubmission)
 }
