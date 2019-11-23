@@ -86,9 +86,7 @@
         <div class="row">
             <div style="padding-left:2em" class="col s12 m6 l6">
                 <div class="row">
-                    <div contenteditable="true" id="training-txt" class="editable materialize-textarea">
-
-                    </div>
+                    <div onclick="getWordOnClick('training-txt')" contenteditable="true" id="training-txt" class="editable materialize-textarea"></div>
                 </div>
             </div>
             <div style="padding-left:2em;line-height:2em;" class="col s12 m6 l6">
@@ -99,12 +97,12 @@
                     <div class="row">
                         <div class="col s12">
                             <div class="row">
-                                <button onclick="redactSelection('people','redaction-list')">People</button>
-                                <button onclick="redactSelection('racial','redaction-list')">Racial</button>
-                                <button onclick="redactSelection('address','redaction-list')">Address</button>
-                                <button onclick="redactSelection('phone','redaction-list')">Phone</button>
-                                <button onclick="redactSelection('email','redaction-list')">Email</button>
-                                <button onclick="redactSelection('title','redaction-list')">Title</button>
+                                <button onclick="redactSelection('people','redaction-list', 'training-txt')">People</button>
+                                <button onclick="redactSelection('racial','redaction-list', 'training-txt')">Racial</button>
+                                <button onclick="redactSelection('address','redaction-list', 'training-txt')">Address</button>
+                                <button onclick="redactSelection('phone','redaction-list', 'training-txt')">Phone</button>
+                                <button onclick="redactSelection('email','redaction-list', 'training-txt')">Email</button>
+                                <button onclick="redactSelection('title','redaction-list', 'training-txt')">Title</button>
                             </div>
                             <h4>List of Training Entities</h4>
                             <ul id="redaction-list"></ul>
@@ -114,11 +112,11 @@
                     <div class="row">
                         <div class="col s12">
                             <div class="row">
-                                    <button onclick="reportSelection('perpetrator','report-list')">Perpetrator</button>
-                                    <button onclick="reportSelection('victim','report-list')">Victim</button>
-                                    <button onclick="reportSelection('location','report-list')">Location</button>
-                                    <button onclick="reportSelection('time','report-list')">Time</button>
-                                    <button onclick="reportSelection('weapon','report-list')">Weapon</button>
+                                    <button onclick="reportSelection('perpetrator','report-list', 'training-txt')">Perpetrator</button>
+                                    <button onclick="reportSelection('victim','report-list', 'training-txt')">Victim</button>
+                                    <button onclick="reportSelection('location','report-list', 'training-txt')">Location</button>
+                                    <button onclick="reportSelection('time','report-list', 'training-txt')">Time</button>
+                                    <button onclick="reportSelection('weapon','report-list', 'training-txt')">Weapon</button>
                             </div>
                             <h4>List of Training Entities</h4>
                             <ul id="report-list"></ul>
@@ -137,7 +135,7 @@
         <div class="row">
             <div style="padding-left:2em" class="col s12 m6 l6">
                 <div class="row">
-                    <textarea contenteditable="true" id="testing-txt" class="">
+                    <textarea contenteditable="true" id="testing-txt" class="editable">
 
                     </textarea>
                 </div>
@@ -200,8 +198,6 @@
                     $('#test-tab').css('display', 'block');
                     break;
                 default:
-                    $('#train-tab').css('display', 'block');
-                    $('#test-tab').css('display', 'none');
                     break;
             }
         }

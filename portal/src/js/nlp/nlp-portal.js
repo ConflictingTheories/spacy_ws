@@ -36,22 +36,75 @@ function clearSelection(){
 }
 
 // TEXT SELECTION FUNCTION (FOR HIGHLEGHTED TEXT)
-function getSelectionText() {
+function getSelectionText(textId) {
     var text = "";
     var start, end;
+    text = window.getSelection();
+    start = text.anchorOffset
+    end = text.focusOffset
     
-    if (window.getSelection) {
-        let sele =window.getSelection();
-        console.log(sele);
-        text = sele.toString();
-        start = Math.min(sele.baseOffset,sele.extentOffset);
-        end = Math.max(sele.baseOffset,sele.extentOffset);
-    }
-
     return {
         text: text,
         start: start,
         end: end
+    }
+}
+
+
+function getWordOnClick(textId){
+  
+    let text = document.getElementById(textId).innerText;
+    let sele = window.getSelection();
+    
+    console.log(text);
+    start = sele.anchorOffset
+    end = sele.focusOffset
+
+    console.log(sele, text, start, end);
+
+    if(start == end && text != ''){
+        let foundWord = false;
+        let foundStart = null;
+        let foundEnd = null;
+        let cnt = 0;
+        while(!foundWord && cnt < 100){
+            // Find Start
+            if(foundStart === null && (start-cnt) > 0 && text[start-cnt] !== " " && text[start-cnt] !== "\n" && text[start+cnt] !== ""){
+                console.log(text[start-cnt])
+                // Do nothing
+            }else{
+                if(foundStart === null){
+                    foundStart = start-cnt == 0 ? start-cnt : start-cnt+1;
+                    console.log("START", foundStart)
+                }
+            }
+            // Find End
+            if(foundEnd === null && (end+cnt) < text.length && text[end+cnt] !== " " && text[start+cnt] !== "\n" && text[start+cnt] !== ""){
+                // Do nothing
+                console.log(text[end+cnt])
+            }else{
+                if(foundEnd === null){
+                    foundEnd = end+cnt;
+                    console.log("END", foundEnd)
+                }
+            }
+            // Found both Sides
+            if(foundStart !== null && foundEnd !== null){
+                console.log(foundStart, foundEnd, text.substring(foundStart,foundEnd))
+                foundWord = true;
+                let range = document.createRange();
+                range.setEnd(sele.focusNode,foundEnd);
+                range.setStart(sele.focusNode,foundStart);
+                sele.removeAllRanges()
+                sele.addRange(range);
+                // textarea.selectionStart=foundStart;
+                // textarea.selectionEnd=foundEnd;
+                // textarea.focus();
+            }else{
+                console.log('searching .. ..')
+                cnt++;
+            }
+        }
     }
 }
 
@@ -94,8 +147,8 @@ function addTagSel(tag, idelm) {
 }
 
 // Redact Selection and Return Info
-function redactSelection(type, listId) {
-    let selectionText = getSelectionText();
+function redactSelection(type, listId, textId) {
+    let selectionText = getSelectionText(textId);
     switch (type) {
         case 'people':
             addTagSel('b', 'training-txt');
@@ -172,69 +225,71 @@ function redactSelection(type, listId) {
 }
 
 // Redact Selection and Return Info
-function reportSelection(type, listId) {
-    let selectionText = getSelectionText();
-    switch (type) {
-        case 'perpetrator':
-            addTagSel('b', 'training-txt');
-            reportingList.push([selectionText.start, selectionText.end, 'PERPETRATOR']);
-            if(listId){
-                let dom = document.getElementById(listId).innerHTML;
-                dom += `<li>[${selectionText.start}, ${selectionText.end}, 'PERPETRATOR']</li>`;
-                document.getElementById(listId).innerHTML = dom;
-            }
-            clearSelection();
-            break;
-        case 'victim':
-            addTagSel('b', 'training-txt');
-            reportingList.push([selectionText.start, selectionText.end, 'VICTIM']);
-            if(listId){
-                let dom = document.getElementById(listId).innerHTML;
-                dom += `<li>[${selectionText.start}, ${selectionText.end}, 'VICTIM']</li>`;
-                document.getElementById(listId).innerHTML = dom;
-            }
-            clearSelection();
-            break;
-        case 'location':
-            addTagSel('b', 'training-txt');
-            reportingList.push([selectionText.start, selectionText.end, 'LOCATION']);
-            if(listId){
-                let dom = document.getElementById(listId).innerHTML;
-                dom += `<li>[${selectionText.start}, ${selectionText.end}, 'LOCATION']</li>`;
-                document.getElementById(listId).innerHTML = dom;
-            }
-            clearSelection();
-            break;
-        case 'time':
-            addTagSel('b', 'training-txt');
-            reportingList.push([selectionText.start, selectionText.end, 'TIME']);
-            if(listId){
-                let dom = document.getElementById(listId).innerHTML;
-                dom += `<li>[${selectionText.start}, ${selectionText.end}, 'TIME']</li>`;
-                document.getElementById(listId).innerHTML = dom;
-            }
-            clearSelection();
-            break;
-        case 'weapon':
-            addTagSel('b', 'training-txt');
-            reportingList.push([selectionText.start, selectionText.end, 'WEAPON']);
-            if(listId){
-                let dom = document.getElementById(listId).innerHTML;
-                dom += `<li>[${selectionText.start}, ${selectionText.end}, 'WEAPON']</li>`;
-                document.getElementById(listId).innerHTML = dom;
-            }
-            clearSelection();
-            break;
-        default:
-            Swal.fire({
-                title: 'Missing Information!',
-                text: 'Missing Type Information - Something appears to have gone wrong.',
-                type: 'error',
-                confirmButtonText: 'Got it, Thanks',
-            })
-            .then((res) => {
-                console.log(res);
-            });
+function reportSelection(type, listId, textId) {
+    let selectionText = getSelectionText(textId);
+    if(selectionText.start !== selectionText.end){
+        switch (type) {
+            case 'perpetrator':
+                addTagSel('b', 'training-txt');
+                reportingList.push([selectionText.start, selectionText.end, 'PERPETRATOR']);
+                if(listId){
+                    let dom = document.getElementById(listId).innerHTML;
+                    dom += `<li>[${selectionText.start}, ${selectionText.end}, 'PERPETRATOR']</li>`;
+                    document.getElementById(listId).innerHTML = dom;
+                }
+                clearSelection();
+                break;
+            case 'victim':
+                addTagSel('b', 'training-txt');
+                reportingList.push([selectionText.start, selectionText.end, 'VICTIM']);
+                if(listId){
+                    let dom = document.getElementById(listId).innerHTML;
+                    dom += `<li>[${selectionText.start}, ${selectionText.end}, 'VICTIM']</li>`;
+                    document.getElementById(listId).innerHTML = dom;
+                }
+                clearSelection();
+                break;
+            case 'location':
+                addTagSel('b', 'training-txt');
+                reportingList.push([selectionText.start, selectionText.end, 'LOCATION']);
+                if(listId){
+                    let dom = document.getElementById(listId).innerHTML;
+                    dom += `<li>[${selectionText.start}, ${selectionText.end}, 'LOCATION']</li>`;
+                    document.getElementById(listId).innerHTML = dom;
+                }
+                clearSelection();
+                break;
+            case 'time':
+                addTagSel('b', 'training-txt');
+                reportingList.push([selectionText.start, selectionText.end, 'TIME']);
+                if(listId){
+                    let dom = document.getElementById(listId).innerHTML;
+                    dom += `<li>[${selectionText.start}, ${selectionText.end}, 'TIME']</li>`;
+                    document.getElementById(listId).innerHTML = dom;
+                }
+                clearSelection();
+                break;
+            case 'weapon':
+                addTagSel('b', 'training-txt');
+                reportingList.push([selectionText.start, selectionText.end, 'WEAPON']);
+                if(listId){
+                    let dom = document.getElementById(listId).innerHTML;
+                    dom += `<li>[${selectionText.start}, ${selectionText.end}, 'WEAPON']</li>`;
+                    document.getElementById(listId).innerHTML = dom;
+                }
+                clearSelection();
+                break;
+            default:
+                Swal.fire({
+                    title: 'Missing Information!',
+                    text: 'Missing Type Information - Something appears to have gone wrong.',
+                    type: 'error',
+                    confirmButtonText: 'Got it, Thanks',
+                })
+                .then((res) => {
+                    console.log(res);
+                });
+        }
     }
 }
 
