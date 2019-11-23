@@ -50,7 +50,6 @@ function getSelectionText(textId) {
     }
 }
 
-
 function getWordOnClick(textId){
   
     let text = document.getElementById(textId).innerText;
@@ -149,78 +148,80 @@ function addTagSel(tag, idelm) {
 // Redact Selection and Return Info
 function redactSelection(type, listId, textId) {
     let selectionText = getSelectionText(textId);
-    switch (type) {
-        case 'people':
-            addTagSel('b', 'training-txt');
-            redactionList.push([selectionText.start, selectionText.end, 'PERSON']);
-            if(listId){
-                let dom = document.getElementById(listId).innerHTML;
-                dom += `<li>[${selectionText.start}, ${selectionText.end}, 'PERSON']</li>`
-                document.getElementById(listId).innerHTML = dom;
-            }
-            clearSelection();
-            break;
-        case 'racial':
-            addTagSel('b', 'training-txt');
-            redactionList.push([selectionText.start, selectionText.end, 'RACIAL']);
-            if(listId){
-                let dom = document.getElementById(listId).innerHTML;
-                dom += `<li>[${selectionText.start}, ${selectionText.end}, 'RACIAL']</li>`;
-                document.getElementById(listId).innerHTML = dom;
-            }
-            clearSelection();
-            break;
-        case 'address':
-            addTagSel('b', 'training-txt');
-            redactionList.push([selectionText.start, selectionText.end, 'ADDRESS']);
-            if(listId){
-                let dom = document.getElementById(listId).innerHTML;
-                dom += `<li>[${selectionText.start}, ${selectionText.end}, 'ADDRESS']</li>`;
-                document.getElementById(listId).innerHTML = dom;
-            }
-            clearSelection();
-            break;
-        case 'phone':
-            addTagSel('b', 'training-txt');
-            redactionList.push([selectionText.start, selectionText.end, 'PHONE']);
-             if(listId){
-                let dom = document.getElementById(listId).innerHTML;
-                dom += `<li>[${selectionText.start}, ${selectionText.end}, 'PHONE']</li>`;
-                document.getElementById(listId).innerHTML = dom;
-            }
-            clearSelection();
-            break;
-        case 'email':
-            addTagSel('b', 'training-txt');
-            redactionList.push([selectionText.start, selectionText.end, 'EMAIL'])
-            if(listId){
-                let dom = document.getElementById(listId).innerHTML;
-                dom += `<li>[${selectionText.start}, ${selectionText.end}, 'EMAIL']</li>`;
-                document.getElementById(listId).innerHTML = dom;
-            }
-            clearSelection();
-            break;
-        case 'title':
-            addTagSel('b', 'training-txt');
-            redactionList.push([selectionText.start, selectionText.end, 'TITLE'])
-            if(listId){
-                let dom = document.getElementById(listId).innerHTML;
-                dom += `<li>[${selectionText.start}, ${selectionText.end}, 'TITLE']</li>`;
-                document.getElementById(listId).innerHTML = dom;
-            }
-            clearSelection();
-            break;
-        default:
-            Swal.fire({
-                title: 'Missing Information!',
-                text: 'Missing Type Information - Something appears to have gone wrong.',
-                type: 'error',
-                confirmButtonText: 'Got it, Thanks',
-            })
-            .then((res) => {
-                console.log(res);
-            });
-            clearSelection();
+    if(selectionText.start !== selectionText.end){
+        switch (type) {
+            case 'people':
+                addTagSel('b', 'training-txt');
+                redactionList.push([selectionText.start, selectionText.end, 'PERSON']);
+                if(listId){
+                    let dom = document.getElementById(listId).innerHTML;
+                    dom += `<li>[${selectionText.start}, ${selectionText.end}, 'PERSON']</li>`
+                    document.getElementById(listId).innerHTML = dom;
+                }
+                clearSelection();
+                break;
+            case 'racial':
+                addTagSel('b', 'training-txt');
+                redactionList.push([selectionText.start, selectionText.end, 'RACIAL']);
+                if(listId){
+                    let dom = document.getElementById(listId).innerHTML;
+                    dom += `<li>[${selectionText.start}, ${selectionText.end}, 'RACIAL']</li>`;
+                    document.getElementById(listId).innerHTML = dom;
+                }
+                clearSelection();
+                break;
+            case 'address':
+                addTagSel('b', 'training-txt');
+                redactionList.push([selectionText.start, selectionText.end, 'ADDRESS']);
+                if(listId){
+                    let dom = document.getElementById(listId).innerHTML;
+                    dom += `<li>[${selectionText.start}, ${selectionText.end}, 'ADDRESS']</li>`;
+                    document.getElementById(listId).innerHTML = dom;
+                }
+                clearSelection();
+                break;
+            case 'phone':
+                addTagSel('b', 'training-txt');
+                redactionList.push([selectionText.start, selectionText.end, 'PHONE']);
+                if(listId){
+                    let dom = document.getElementById(listId).innerHTML;
+                    dom += `<li>[${selectionText.start}, ${selectionText.end}, 'PHONE']</li>`;
+                    document.getElementById(listId).innerHTML = dom;
+                }
+                clearSelection();
+                break;
+            case 'email':
+                addTagSel('b', 'training-txt');
+                redactionList.push([selectionText.start, selectionText.end, 'EMAIL'])
+                if(listId){
+                    let dom = document.getElementById(listId).innerHTML;
+                    dom += `<li>[${selectionText.start}, ${selectionText.end}, 'EMAIL']</li>`;
+                    document.getElementById(listId).innerHTML = dom;
+                }
+                clearSelection();
+                break;
+            case 'title':
+                addTagSel('b', 'training-txt');
+                redactionList.push([selectionText.start, selectionText.end, 'TITLE'])
+                if(listId){
+                    let dom = document.getElementById(listId).innerHTML;
+                    dom += `<li>[${selectionText.start}, ${selectionText.end}, 'TITLE']</li>`;
+                    document.getElementById(listId).innerHTML = dom;
+                }
+                clearSelection();
+                break;
+            default:
+                Swal.fire({
+                    title: 'Missing Information!',
+                    text: 'Missing Type Information - Something appears to have gone wrong.',
+                    type: 'error',
+                    confirmButtonText: 'Got it, Thanks',
+                })
+                .then((res) => {
+                    console.log(res);
+                });
+                clearSelection();
+        }
     }
 }
 
