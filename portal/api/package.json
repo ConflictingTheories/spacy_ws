@@ -1,0 +1,30 @@
+{
+    "name": "nlp-portal",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "start": "node ./bin/NLPPortal",
+        "build": "./build-dist.sh"
+    },
+    "dependencies": {
+        "body-parser": "~1.16.0",
+        "compression": "^1.7.2",
+        "cookie-parser": "~1.4.3",
+        "debug": "~2.6.0",
+        "ejs": "^2.5.7",
+        "express": "~4.14.1",
+        "htmlparser2": "^3.9.2",
+        "morgan": "~1.7.0",
+        "mysql": "^2.14.1",
+        "node-cron": "^1.2.1",
+        "nodemon": "^1.18.5",
+        "request": "^2.83.0",
+        "request-promise": "^4.2.2",
+        "serve-favicon": "~2.3.2",
+        "xmldom": "^0.1.27",
+        "xpath": "0.0.24"
+    },
+    "devDependencies": {
+        "uglify-es": "^3.3.9"
+    }
+}

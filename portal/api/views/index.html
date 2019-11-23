@@ -1,0 +1,211 @@
+<!--
+/*                                            *\
+** ------------------------------------------ **
+**                 IOTA API                   **
+** ------------------------------------------ **
+**          Copyright (c) 2019           **
+**              - Kyle Derby MacInnis         **
+**                                            **
+** Any unauthorized distribution or transfer  **
+**    of this work is strictly prohibited.    **
+**                                            **
+**           All Rights Reserved.             **
+** ------------------------------------------ **
+\*                                            */ 
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            <%=title%>
+        </title>
+        <!-- Styles -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel='stylesheet' href='/stylesheets/nlpportal.min.css'>
+        <link rel='stylesheet' href='/stylesheets/3rd-party.min.css'>
+    
+        <script src="/javascripts/3rd-party.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script> -->
+        <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+        <!-- App Logic -->
+        <script async src="/javascripts/nlpportal.min.js"></script>
+    </head>
+<body>
+    <!-- PRINT BANNER -->
+    <div class="show-print">
+        <h4 style="text-align:center;">
+            SpaCy NLP Training Portal
+        </h4>
+    </div>
+    <!-- NAV BAR -->
+    <nav style="width:100%;background-color:whitesmoke; border-bottom:5px #6ad solid;" class="top-nav no-print">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a style="color:#6ad;" href="/" class="brand-logo">NLP Portal</a>
+                <ul class="right hide-on-med-and-down">
+                    <li>
+                        <a style="color:darkslategray;" href="/train">Train</a>
+                    </li>
+                    <li>
+                        <a style="color:darkslategray;" href="/test">Test</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="no-print">
+            <a href="#" class="top-nav sidenav-trigger full hide-on-large-only" data-target="nav-mobile">
+                <i style="font-size:2em;" class="fa fa-bars"></i>
+            </a>
+        </div>
+    </nav>
+    <ul style="background-color:whitesmoke; border-bottom:5px #6ad solid;" id="nav-mobile" class="sidenav sidenav-fixed hide-on-large-only no-print" style="transform: translateX(-105%);">
+        <li class="logo">
+            <a href="/" class="brand-logo">
+                <h4 style="font-weight:bold;color:#6ad;">
+                    NLP Portal
+                </h4>
+            </a>
+        </li>
+        <li>
+            <a style="color:darkslategray;" href="/train">
+                Train
+            </a>
+        </li>
+        <li>
+            <a style="color:darkslategray;" href="/test">
+                Test
+            </a>
+        </li>
+    </ul>
+
+    <!-- TRAINING PORTAL-->
+    <div id="train-tab" style="display:block">
+        <div class="row">
+            <div style="padding-left:2em" class="col s12 m6 l6">
+                <div class="row">
+                    <div contenteditable="true" id="training-txt" class="editable materialize-textarea">
+
+                    </div>
+                </div>
+            </div>
+            <div style="padding-left:2em;line-height:2em;" class="col s12 m6 l6">
+                <h5>
+                    TRAINING ENTITIES
+                </h5>
+                <div class="col s12">
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="row">
+                                <button onclick="redactSelection('people','redaction-list')">People</button>
+                                <button onclick="redactSelection('racial','redaction-list')">Racial</button>
+                                <button onclick="redactSelection('address','redaction-list')">Address</button>
+                                <button onclick="redactSelection('phone','redaction-list')">Phone</button>
+                                <button onclick="redactSelection('email','redaction-list')">Email</button>
+                                <button onclick="redactSelection('title','redaction-list')">Title</button>
+                            </div>
+                            <h4>List of Training Entities</h4>
+                            <ul id="redaction-list"></ul>
+                            <button onclick="saveRedaction('training-txt')">Submit Training</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="row">
+                                    <button onclick="reportSelection('perpetrator','report-list')">Perpetrator</button>
+                                    <button onclick="reportSelection('victim','report-list')">Victim</button>
+                                    <button onclick="reportSelection('location','report-list')">Location</button>
+                                    <button onclick="reportSelection('time','report-list')">Time</button>
+                                    <button onclick="reportSelection('weapon','report-list')">Weapon</button>
+                            </div>
+                            <h4>List of Training Entities</h4>
+                            <ul id="report-list"></ul>
+                            <button onclick="saveReport('training-txt')">Submit Training</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <br>
+    </div>
+
+    <!-- TESTING PORTAL-->
+    <div id="test-tab" style="display:none">
+        <div class="row">
+            <div style="padding-left:2em" class="col s12 m6 l6">
+                <div class="row">
+                    <textarea contenteditable="true" id="testing-txt" class="">
+
+                    </textarea>
+                </div>
+            </div>
+            <div style="padding-left:2em;line-height:2em;" class="col s12 m6 l6">
+                <h5>
+                    TESTING CONTROLS
+                </h5>
+                <button onclick="testRedaction()">Test Redaction</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRINT BANNER -->
+    <div class="show-print">
+        <h6 style="text-align:center;">
+            Copyright &copy; 2019 Kyle Derby MacInnis - Powered by KDM Solutions
+        </h6>
+    </div>
+</body>
+
+<script>
+    // Nav / Collapse
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.collapsible');
+        var instances = M.Collapsible.init(elems, {});
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.sidenav');
+        var instances = M.Sidenav.init(elems, {});
+    });
+
+    // On Load
+    $(document).ready(function() {
+        // GENERAL / NAVIGATION FUNCTIONS
+        // ------------------------------
+        let preloaded = '<%=preloaded%>';
+        let type = '<%=type%>';
+        let details = JSON.parse('<%-JSON.stringify(details)%>');
+        if (preloaded !== 'false' && type != 'false') {
+            if (type == 'train') {
+                switchTabs('train');
+            } else if (type == 'test') {
+                switchTabs('test');
+            } else {
+                // DO NOTHING
+            }
+        }
+
+        // Switch Tabs for Page
+        function switchTabs(id) {
+            console.log(id);
+            switch (id) {
+                case 'train':
+                    $('#train-tab').css('display', 'block');
+                    $('#test-tab').css('display', 'none');
+                    break;
+                case 'test':
+                    $('#train-tab').css('display', 'none');
+                    $('#test-tab').css('display', 'block');
+                    break;
+                default:
+                    $('#train-tab').css('display', 'block');
+                    $('#test-tab').css('display', 'none');
+                    break;
+            }
+        }
+    });
+</script>
+
+</html>

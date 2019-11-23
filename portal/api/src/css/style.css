@@ -1,0 +1,124 @@
+/*                                            *\
+** ------------------------------------------ **
+**                 IOTA API                   **
+** ------------------------------------------ **
+**          Copyright (c) 2019           **
+**              - Kyle Derby MacInnis         **
+**                                            **
+** Any unauthorized distribution or transfer  **
+**    of this work is strictly prohibited.    **
+**                                            **
+**           All Rights Reserved.             **
+** ------------------------------------------ **
+\*                                            */
+ 
+ * {
+     word-break: break-all;
+ }
+
+
+ .editable{
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #9e9e9e;
+    border-radius: 0;
+    outline: none;
+    font-size: 16px;
+    margin: 0 0 8px 0;
+    padding: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    -webkit-transition: border .3s, -webkit-box-shadow .3s;
+    transition: border .3s, -webkit-box-shadow .3s;
+    transition: box-shadow .3s, border .3s;
+    transition: box-shadow .3s, border .3s, -webkit-box-shadow .3s;
+ }
+
+ .editable{
+    line-height: normal;
+    overflow-y: hidden;
+    height: 60vh;
+    width: 100%;
+    padding: .8rem 0 .8rem 0;
+    resize: none;
+    min-height: 7rem;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width:100%;
+ }
+
+
+ 
+ nav {
+     font-weight: bold;
+ }
+ 
+ .show-print {
+     display: none;
+ }
+ 
+ .footer-sticky {
+     position: fixed;
+     bottom: 0;
+ }
+ 
+ .openIOTA {
+     border: none;
+     width: 100%;
+     background-color: whitesmoke;
+     border-bottom: 5px #6ad solid;
+ }
+ 
+ @media print {
+     body {
+         background-color: #FFFFFF;
+         background-image: none;
+         color: #000000
+     }
+     body {
+         width: 100%;
+     }
+     .show-print {
+         display: block;
+     }
+     .no-print {
+         display: none;
+     }
+ }
+ 
+ body {
+     background-color: whitesmoke;
+     color: #6ad;
+     padding: 50px;
+     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+ }
+ 
+ a {
+     color: slateblue;
+ }
+ 
+ html,
+ body {
+     width: 100%;
+     height: 100%;
+     margin: 0;
+     padding: 0;
+     border: 0;
+ }
+ 
+ footer {
+     position: absolute;
+     bottom: 0;
+     right: 0;
+     font-size: 12px;
+     padding: 10px;
+     color: #333;
+     letter-spacing: 1px;
+     font-family: 'Inconsolata', monospace;
+ }
+ 
+ footer a {
+     color: slateblue;
+ }
