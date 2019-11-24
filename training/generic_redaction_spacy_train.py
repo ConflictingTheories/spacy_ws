@@ -8,6 +8,8 @@
 # 2019 (c) Kyle Derby MacInnis
 # ============================
 
+import os
+import json
 import plac
 import asyncio
 import spacy
@@ -20,202 +22,15 @@ from spacy.util import minibatch, compounding
 
 # Labels to Add to model
 LABEL = ['PERSON', 'EMAIL', 'PHONE', 'RACIAL', 'TITLE', 'ADDRESS']
+DATA_DIR = "%s/redact_data" % os.getcwd()
+TRAINING_DATA = []
 
 # NER Data for Training New data
-TRAINING_DATA = [
-    (
-        "bomb", 
-        {"entities": [(0,4, "WEAPON")]}
-    ),
-    (
-        "bombs", 
-        {"entities": [(0,5, "WEAPON")]}
-    ),
-    (
-        "gun", 
-        {"entities": [(0, 3, "WEAPON")]}
-    ),
-    (
-        "guns", 
-        {"entities": [(0, 4, "WEAPON")]}
-    ),
-    (
-        "knife", 
-        {"entities": [(0,5, "WEAPON")]}
-    ),
-    (
-        "knives", 
-        {"entities": [(0,6, "WEAPON")]}
-    ),
-    (
-        "taser", 
-        {"entities": [(0,5, "WEAPON")]}
-    ),
-    (
-        "tasers", 
-        {"entities": [(0,6, "WEAPON")]}
-    ),
-    (
-        "he had a knife", 
-        {"entities": [(9, 14, "WEAPON")]}
-    ),
-    (
-        "he had a gun", 
-        {"entities": [(9, 12, "WEAPON")]}
-    ),
-    (
-        "he had a bomb", 
-        {"entities": [(9, 13, "WEAPON")]}
-    ),
-    (
-        "he had a weapon", 
-        {"entities": [(9, 15, "WEAPON")]}
-    ),
-    (
-        "he had a taser", 
-        {"entities": [(9, 14, "WEAPON")]}
-    ),
-    (
-        "she had a knife", 
-        {"entities": [(10, 15, "WEAPON")]}
-    ),
-    (
-        "she had a gun", 
-        {"entities": [(10, 13, "WEAPON")]}
-    ),
-    (
-        "she had a bomb", 
-        {"entities": [(10, 14, "WEAPON")]}
-    ),
-    (
-        "she had a weapon", 
-        {"entities": [(10, 16, "WEAPON")]}
-    ),
-    (
-        "she had a taser", 
-        {"entities": [(10, 15, "WEAPON")]}
-    ),
-        (
-        "they had a knife", 
-        {"entities": [(11, 16, "WEAPON")]}
-    ),
-    (
-        "he had a gun", 
-        {"entities": [(11, 14, "WEAPON")]}
-    ),
-    (
-        "he had a bomb", 
-        {"entities": [(11, 15, "WEAPON")]}
-    ),
-    (
-        "he had a weapon", 
-        {"entities": [(11, 17, "WEAPON")]}
-    ),
-    (
-        "he had a taser", 
-        {"entities": [(11, 16, "WEAPON")]}
-    ),
-    (
-        "someone had a knife", 
-        {"entities": [(14, 19, "WEAPON")]}
-    ),
-    (
-        "someone had a gun without ammo", 
-        {"entities": [(14, 17, "WEAPON"),(26, 30, "WEAPON")]}
-    ),
-    (
-        "someone had a bomb hidden", 
-        {"entities": [(14, 18, "WEAPON")]}
-    ),
-    (
-        "someone had a weapon and attacked", 
-        {"entities": [(14, 20, "WEAPON")]}
-    ),
-    (
-        "someone had a taser with them", 
-        {"entities": [(14, 19, "WEAPON")]}
-    ),
-    (
-        "he had a knife in his jacket", 
-        {"entities": [(9, 14, "WEAPON")]}
-    ),
-    (
-        "he had a gun without bullets", 
-        {"entities": [(9, 12, "WEAPON"),(21, 28, "WEAPON")]}
-    ),
-    (
-        "he had a bomb hidden in the ceiling", 
-        {"entities": [(9, 13, "WEAPON")]}
-    ),
-    (
-        "he had a weapon in the back", 
-        {"entities": [(9, 15, "WEAPON")]}
-    ),
-    (
-        "he had a taser stashed away", 
-        {"entities": [(9, 14, "WEAPON")]}
-    ),
-    (
-        "she had a knife drawn and ready", 
-        {"entities": [(10, 15, "WEAPON")]}
-    ),
-    (
-        "she had a gun in a holster", 
-        {"entities": [(10, 13, "WEAPON")]}
-    ),
-    (
-        "she had a bomb in her backpack", 
-        {"entities": [(10, 14, "WEAPON")]}
-    ),
-    (
-        "she had a weapon of unknown origin", 
-        {"entities": [(10, 16, "WEAPON")]}
-    ),
-    (
-        "she had a taser in her purse", 
-        {"entities": [(10, 15, "WEAPON")]}
-    ),
-        (
-        "they had a knife in their hands", 
-        {"entities": [(11, 16, "WEAPON")]}
-    ),
-    (
-        "he had a gun by the counter", 
-        {"entities": [(11, 14, "WEAPON")]}
-    ),
-    (
-        "he had a bomb in his bag", 
-        {"entities": [(11, 15, "WEAPON")]}
-    ),
-    (
-        "he had a weapon behind his back", 
-        {"entities": [(11, 17, "WEAPON")]}
-    ),
-    (
-        "he had a taser in his hand", 
-        {"entities": [(11, 16, "WEAPON")]}
-    ),
-    (
-        "someone had a knife in their pocket", 
-        {"entities": [(14, 19, "WEAPON")]}
-    ),
-    (
-        "someone had a gun concealed in their pants", 
-        {"entities": [(14, 17, "WEAPON")]}
-    ),
-    (
-        "someone had a bomb and a toothbrush", 
-        {"entities": [(14, 18, "WEAPON")]}
-    ),
-    (
-        "someone had a weapon under their coat", 
-        {"entities": [(14, 20, "WEAPON")]}
-    ),
-    (
-        "someone had a taser and was waving it around", 
-        {"entities": [(14, 19, "WEAPON")]}
-    )
-]
+for filename in os.listdir(DATA_DIR):
+    if filename.find(".data.json"):
+        with open("%s/%s" % (DATA_DIR, filename)) as f:
+            TRAINING_DATA = TRAINING_DATA + json.load(f)
+            print(TRAINING_DATA)
 
 # Retain NER Learning (will be generated from Revision Texts)
 REVISION_DATA = []

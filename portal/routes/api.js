@@ -15,7 +15,7 @@
 /* ------------------------------ *\
 //       INDEX API ROUTER         \\
 \* ------------------------------ */
-
+var fs = require('fs');
 var express = require('express');
 var router = express.Router();
 var XRP = require('../lib/XRP.lib');
@@ -23,6 +23,45 @@ var XRP = require('../lib/XRP.lib');
 /* GET API List page. */
 router.get('/', function(req, res, next) {
     res.render('apilist', { title: 'API - Command List' });
+});
+
+router.post('/train/redact', (req,res,next)=>{
+    console.log(req.body);
+    
+    // Save file into Training Folder
+    fs.writeFile(`${__dirname}/../../training/redact_data/${Date.now()}.data.json`,JSON.stringify(req.body),(err)=>{
+        if(err){
+            console.error(err);
+            res.json({
+                err:err
+            });
+        }
+        res.json({
+            msg:"success"
+        });
+    });
+
+    // Then Queue up more training
+
+})
+
+router.post('/train/report', (req,res,next)=>{
+    console.log(req.body);
+    // Save file into Training Folder
+    fs.writeFile(`${__dirname}/../../training/report_data/${Date.now()}.data.json`,JSON.stringify(req.body),(err)=>{
+        if(err){
+            console.error(err);
+            res.json({
+                err:err
+            });
+        }
+        res.json({
+            msg:"success"
+        });
+    });
+
+    // Then Queue up more training)
+
 });
 
 module.exports = router;

@@ -273,10 +273,10 @@ function redactSelection(type, listId, textId) {
                     type: 'error',
                     confirmButtonText: 'Got it, Thanks',
                 })
-                .then((res) => {
-                    console.log(res);
-                    clearSelection();
-                });
+                    .then((res) => {
+                        console.log(res);
+                        clearSelection();
+                    });
         }
     }
 }
@@ -359,10 +359,11 @@ function clearReporting(listId) {
 
 // Save Current Data Set Learning
 function saveRedaction(textId, listId) {
-    let payload = {
-        text: document.getElementById(textId).innerText,
-        entities: redactionList.map(x => x)
-    }
+    let payload = [
+        document.getElementById(textId).innerText,
+        { entities: redactionList.map(x => x) }
+    ];
+
     redactionSubmission.push(payload);
     clearRedactions(listId)
     console.log(redactionSubmission)
@@ -370,16 +371,32 @@ function saveRedaction(textId, listId) {
 
 // Save Data Set Learning
 function saveReport(textId, listId) {
-    let payload = {
-        text: document.getElementById(textId).innerText,
-        entities: reportingList.map(x => x)
-    }
+    let payload = [
+        document.getElementById(textId).innerText,
+        { entities: reportingList.map(x => x) }
+    ]
     reportingSubmission.push(payload);
     clearReporting(listId);
     console.log(reportingSubmission)
 }
 
-function exportJSON(){
+function uploadTraining(url, payload){
+    $.ajax({
+        type: "POST",
+        url: url,
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(payload),
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (request, status, error) {
+            console.error(error);
+        }
+    });
+}
+
+function exportJSON() {
     Swal.fire({
         title: 'Finished Training?',
         text: 'Confirm to submit.',
@@ -388,25 +405,27 @@ function exportJSON(){
         cancelButtontext: "Go Back",
         confirmButtonText: 'Got it, Thanks',
     })
-    .then((res) => {
-        console.log(res);
-        if (res.value) {
-            if(reportingSubmission.length > 0){
-                var a = document.createElement("a");
-                var file = new Blob([JSON.stringify(reportingSubmission)], {type:"application/json;charset=utf-8"});
-                a.href = URL.createObjectURL(file);
-                a.download = 'reportingData.json';
-                a.click();
+        .then((res) => {
+            console.log(res);
+            if (res.value) {
+                if (reportingSubmission.length > 0) {
+                    uploadTraining('/api/train/report', reportingSubmission);
+                    var a = document.createElement("a");
+                    var file = new Blob([JSON.stringify(reportingSubmission)], { type: "application/json;charset=utf-8" });
+                    a.href = URL.createObjectURL(file);
+                    a.download = 'reportingData.json';
+                    a.click();
+                }
+                if (redactionSubmission.length > 0) {
+                    uploadTraining('/api/train/redact', redactionSubmission);
+                    var a = document.createElement("a");
+                    var file = new Blob([JSON.stringify(redactionSubmission)], { type: "application/json;charset=utf-8" });
+                    a.href = URL.createObjectURL(file);
+                    a.download = 'redactionData.json';
+                    a.click();
+                }
             }
-            if(redactionSubmission.length > 0){
-                var a = document.createElement("a");
-                var file = new Blob([JSON.stringify(redactionSubmission)], {type:"application/json;charset=utf-8"});
-                a.href = URL.createObjectURL(file);
-                a.download = 'redactionData.json';
-                a.click();
-            }
-        }
-    });
+        });
 
-  
+
 }

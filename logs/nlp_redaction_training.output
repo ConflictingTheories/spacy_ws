@@ -1,0 +1,16 @@
+[['You can call me any time at 403-123-1234', {'entities': [[28, 40, 'PHONE']]}], ['My name is kyle and I am king.', {'entities': [[25, 30, 'TITLE'], [11, 15, 'PERSON']]}]]
+[['You can call me any time at 403-123-1234', {'entities': [[28, 40, 'PHONE']]}], ['My name is kyle and I am king.', {'entities': [[25, 30, 'TITLE'], [11, 15, 'PERSON']]}], ['You can call me any time at 403-123-1234', {'entities': [[28, 40, 'PHONE']]}], ['My name is kyle and I am king.', {'entities': [[25, 30, 'TITLE'], [11, 15, 'PERSON']]}]]
+[['You can call me any time at 403-123-1234', {'entities': [[28, 40, 'PHONE']]}], ['My name is kyle and I am king.', {'entities': [[25, 30, 'TITLE'], [11, 15, 'PERSON']]}], ['You can call me any time at 403-123-1234', {'entities': [[28, 40, 'PHONE']]}], ['My name is kyle and I am king.', {'entities': [[25, 30, 'TITLE'], [11, 15, 'PERSON']]}], ['Kyle', {'entities': [[0, 4, 'PERSON']]}]]
+Losses {'ner': 148.27122646570206}
+Losses {'ner': 144.63691782951355}
+Losses {'ner': 138.4166933298111}
+Losses {'ner': 131.55552804470062}
+Losses {'ner': 107.61611568927765}
+Losses {'ner': 102.53433574363589}
+Losses {'ner': 94.71277274655586}
+Losses {'ner': 118.19804191589355}
+Losses {'ner': 101.10423308610916}
+Losses {'ner': 97.6235176504124}
+Entities in 'Kyle was a man who had a gun and threatened someone with a knife and said he had a bomb'
+PERSON Kyle
+Saved model to model
