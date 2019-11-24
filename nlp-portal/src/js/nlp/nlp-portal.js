@@ -283,7 +283,7 @@ function reportSelection(type, listId, textId) {
     let selectionText = getSelectionText(textId);
     if (selectionText.start !== selectionText.end) {
         switch (type) {
-            case 'perpetrator':
+            case 'PERSON':
                 reportingList.push([selectionText.start, selectionText.end, 'PERSON']);
                 if (listId) {
                     let dom = document.getElementById(listId).innerHTML;

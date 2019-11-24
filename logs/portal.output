@@ -16,7 +16,7 @@
     { entities: [ [ 25, 30, 'TITLE' ], [ 11, 15, 'PERSON' ] ] } ] ]
 [0mPOST /api/train/redact [32m200 [0m26.739 ms - 17[0m
 [ [ 'My name is kyle and I am king.',
-    { entities: [ [ 11, 15, 'PERPETRATOR' ], [ 29, 11, 'VICTIM' ] ] } ] ]
+    { entities: [ [ 11, 15, 'PERSON' ], [ 29, 11, 'VICTIM' ] ] } ] ]
 [ [ 'You can call me any time at 403-123-1234',
     { entities: [ [ 28, 40, 'PHONE' ] ] } ],
   [ 'My name is kyle and I am king.',

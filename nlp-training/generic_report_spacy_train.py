@@ -68,7 +68,7 @@ def main(model=None, new_model_name='reporting', output_dir=None, n_iter=10):
     output_dir = Path('../nlp-training/model')
     # Load Model
     if model is not None:
-        nlp = spacy.load(model).from_disk(output_dir)
+        nlp = spacy.load(output_dir)
     else:
         nlp = spacy.load('en_core_web_sm')
 
