@@ -424,21 +424,6 @@ function refreshModel(type){
     });
 }
 
-// Refresh Model (Retrain)
-function refreshModel(){
-    $.ajax({
-        type: "GET",
-        url: `${portal_server}/api/retrain/${type}`,
-        contentType: 'application/json',
-        success: function (data) {
-            console.log(data);
-        },
-        error: function (request, status, error) {
-            console.error(error);
-        }
-    });
-}
-
 // Load New Model
 function loadModel(textId){
     let type = document.getElementById(textId).value;
