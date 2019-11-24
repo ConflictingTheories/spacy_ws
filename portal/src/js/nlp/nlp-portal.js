@@ -213,61 +213,55 @@ function redactSelection(type, listId, textId) {
     if (selectionText.start !== selectionText.end) {
         switch (type) {
             case 'people':
-                addTagSel('b', 'training-txt');
                 redactionList.push([selectionText.start, selectionText.end, 'PERSON']);
                 if (listId) {
                     let dom = document.getElementById(listId).innerHTML;
-                    dom += `<li>[${selectionText.start}, ${selectionText.end}, 'PERSON']</li>`
+                    dom += `<li class="collection-item">[${selectionText.start}, ${selectionText.end}, 'PERSON']</li>`
                     document.getElementById(listId).innerHTML = dom;
                 }
                 clearSelection();
                 break;
             case 'racial':
-                addTagSel('b', 'training-txt');
                 redactionList.push([selectionText.start, selectionText.end, 'RACIAL']);
                 if (listId) {
                     let dom = document.getElementById(listId).innerHTML;
-                    dom += `<li>[${selectionText.start}, ${selectionText.end}, 'RACIAL']</li>`;
+                    dom += `<li class="collection-item">[${selectionText.start}, ${selectionText.end}, 'RACIAL']</li>`;
                     document.getElementById(listId).innerHTML = dom;
                 }
                 clearSelection();
                 break;
             case 'address':
-                addTagSel('b', 'training-txt');
                 redactionList.push([selectionText.start, selectionText.end, 'ADDRESS']);
                 if (listId) {
                     let dom = document.getElementById(listId).innerHTML;
-                    dom += `<li>[${selectionText.start}, ${selectionText.end}, 'ADDRESS']</li>`;
+                    dom += `<li class="collection-item">[${selectionText.start}, ${selectionText.end}, 'ADDRESS']</li>`;
                     document.getElementById(listId).innerHTML = dom;
                 }
                 clearSelection();
                 break;
             case 'phone':
-                addTagSel('b', 'training-txt');
                 redactionList.push([selectionText.start, selectionText.end, 'PHONE']);
                 if (listId) {
                     let dom = document.getElementById(listId).innerHTML;
-                    dom += `<li>[${selectionText.start}, ${selectionText.end}, 'PHONE']</li>`;
+                    dom += `<li class="collection-item">[${selectionText.start}, ${selectionText.end}, 'PHONE']</li>`;
                     document.getElementById(listId).innerHTML = dom;
                 }
                 clearSelection();
                 break;
             case 'email':
-                addTagSel('b', 'training-txt');
                 redactionList.push([selectionText.start, selectionText.end, 'EMAIL'])
                 if (listId) {
                     let dom = document.getElementById(listId).innerHTML;
-                    dom += `<li>[${selectionText.start}, ${selectionText.end}, 'EMAIL']</li>`;
+                    dom += `<li class="collection-item">[${selectionText.start}, ${selectionText.end}, 'EMAIL']</li>`;
                     document.getElementById(listId).innerHTML = dom;
                 }
                 clearSelection();
                 break;
             case 'title':
-                addTagSel('b', 'training-txt');
                 redactionList.push([selectionText.start, selectionText.end, 'TITLE'])
                 if (listId) {
                     let dom = document.getElementById(listId).innerHTML;
-                    dom += `<li>[${selectionText.start}, ${selectionText.end}, 'TITLE']</li>`;
+                    dom += `<li class="collection-item">[${selectionText.start}, ${selectionText.end}, 'TITLE']</li>`;
                     document.getElementById(listId).innerHTML = dom;
                 }
                 clearSelection();
@@ -279,10 +273,10 @@ function redactSelection(type, listId, textId) {
                     type: 'error',
                     confirmButtonText: 'Got it, Thanks',
                 })
-                    .then((res) => {
-                        console.log(res);
-                    });
-                clearSelection();
+                .then((res) => {
+                    console.log(res);
+                    clearSelection();
+                });
         }
     }
 }
@@ -293,51 +287,46 @@ function reportSelection(type, listId, textId) {
     if (selectionText.start !== selectionText.end) {
         switch (type) {
             case 'perpetrator':
-                addTagSel('b', 'training-txt');
                 reportingList.push([selectionText.start, selectionText.end, 'PERPETRATOR']);
                 if (listId) {
                     let dom = document.getElementById(listId).innerHTML;
-                    dom += `<li>[${selectionText.start}, ${selectionText.end}, 'PERPETRATOR']</li>`;
+                    dom += `<li class="collection-item">[${selectionText.start}, ${selectionText.end}, 'PERPETRATOR']</li>`;
                     document.getElementById(listId).innerHTML = dom;
                 }
                 clearSelection();
                 break;
             case 'victim':
-                addTagSel('b', 'training-txt');
                 reportingList.push([selectionText.start, selectionText.end, 'VICTIM']);
                 if (listId) {
                     let dom = document.getElementById(listId).innerHTML;
-                    dom += `<li>[${selectionText.start}, ${selectionText.end}, 'VICTIM']</li>`;
+                    dom += `<li class="collection-item">[${selectionText.start}, ${selectionText.end}, 'VICTIM']</li>`;
                     document.getElementById(listId).innerHTML = dom;
                 }
                 clearSelection();
                 break;
             case 'location':
-                addTagSel('b', 'training-txt');
                 reportingList.push([selectionText.start, selectionText.end, 'LOCATION']);
                 if (listId) {
                     let dom = document.getElementById(listId).innerHTML;
-                    dom += `<li>[${selectionText.start}, ${selectionText.end}, 'LOCATION']</li>`;
+                    dom += `<li class="collection-item">[${selectionText.start}, ${selectionText.end}, 'LOCATION']</li>`;
                     document.getElementById(listId).innerHTML = dom;
                 }
                 clearSelection();
                 break;
             case 'time':
-                addTagSel('b', 'training-txt');
                 reportingList.push([selectionText.start, selectionText.end, 'TIME']);
                 if (listId) {
                     let dom = document.getElementById(listId).innerHTML;
-                    dom += `<li>[${selectionText.start}, ${selectionText.end}, 'TIME']</li>`;
+                    dom += `<li class="collection-item">[${selectionText.start}, ${selectionText.end}, 'TIME']</li>`;
                     document.getElementById(listId).innerHTML = dom;
                 }
                 clearSelection();
                 break;
             case 'weapon':
-                addTagSel('b', 'training-txt');
                 reportingList.push([selectionText.start, selectionText.end, 'WEAPON']);
                 if (listId) {
                     let dom = document.getElementById(listId).innerHTML;
-                    dom += `<li>[${selectionText.start}, ${selectionText.end}, 'WEAPON']</li>`;
+                    dom += `<li class="collection-item">[${selectionText.start}, ${selectionText.end}, 'WEAPON']</li>`;
                     document.getElementById(listId).innerHTML = dom;
                 }
                 clearSelection();
@@ -370,31 +359,27 @@ function clearReporting(listId) {
 
 // Save Current Data Set Learning
 function saveRedaction(textId, listId) {
-    Swal.fire({
-        title: 'Finished Training?',
-        text: 'Confirm to submit.',
-        type: 'info',
-        showCancelButton: true,
-        cancelButtontext: "Go Back",
-        confirmButtonText: 'Got it, Thanks',
-    })
-        .then((res) => {
-            console.log(res);
-            if (res.value) {
-                let payload = {
-                    text: document.getElementById(textId).innerText,
-                    entities: redactionList.map(x => x)
-                }
-                redactionSubmission.push(payload);
-                clearRedactions(listId)
-                console.log(redactionSubmission)
-            }
-        });
-
+    let payload = {
+        text: document.getElementById(textId).innerText,
+        entities: redactionList.map(x => x)
+    }
+    redactionSubmission.push(payload);
+    clearRedactions(listId)
+    console.log(redactionSubmission)
 }
 
 // Save Data Set Learning
 function saveReport(textId, listId) {
+    let payload = {
+        text: document.getElementById(textId).innerText,
+        entities: reportingList.map(x => x)
+    }
+    reportingSubmission.push(payload);
+    clearReporting(listId);
+    console.log(reportingSubmission)
+}
+
+function exportJSON(){
     Swal.fire({
         title: 'Finished Training?',
         text: 'Confirm to submit.',
@@ -403,16 +388,25 @@ function saveReport(textId, listId) {
         cancelButtontext: "Go Back",
         confirmButtonText: 'Got it, Thanks',
     })
-        .then((res) => {
-            console.log(res);
-            if (res.value) {
-                let payload = {
-                    text: document.getElementById(textId).innerText,
-                    entities: reportingList.map(x => x)
-                }
-                reportingSubmission.push(payload);
-                clearReporting(listId);
-                console.log(reportingSubmission)
+    .then((res) => {
+        console.log(res);
+        if (res.value) {
+            if(reportingSubmission.length > 0){
+                var a = document.createElement("a");
+                var file = new Blob([JSON.stringify(reportingSubmission)], {type:"application/json;charset=utf-8"});
+                a.href = URL.createObjectURL(file);
+                a.download = 'reportingData.json';
+                a.click();
             }
-        });
+            if(redactionSubmission.length > 0){
+                var a = document.createElement("a");
+                var file = new Blob([JSON.stringify(redactionSubmission)], {type:"application/json;charset=utf-8"});
+                a.href = URL.createObjectURL(file);
+                a.download = 'redactionData.json';
+                a.click();
+            }
+        }
+    });
+
+  
 }

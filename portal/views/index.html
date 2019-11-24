@@ -94,44 +94,59 @@
         </li>
     </ul>
 
+    <!-- LOAD DATA MENU -->
+    <ul id="load-data" class="sidenav collection no-print" style="transform: translateX(-105%);">
+        <li class="logo collection-item">
+            <div class="brand-logo"></a>
+                <h4 style="font-weight:bold;color:#6ad;">
+                    load Data
+                </h4>
+            </div>
+        </li>
+        <li class="collection-item">
+                <div class="separator"></div>
+                <label>Remote Data</label>
+                <input placeholder="https://... .csv" class="input-field col s6" type="text" id="ext-link">
+                <button class="btn"
+                        onclick="fetchRemoteCSV('ext-link','training-list','training-txt')">Fetch Remote
+                        CSV</button>
+        </li>
+        <li class="collection-item">
+                <div class="separator"></div>
+                <label>Local Data</label>
+                <input class="input-field col s6" type="file" id="local-link">
+                <button class="btn"
+                        onclick="localCSV('local-link','training-list','training-txt')">Load Local
+                        CSV</button>
+        </li>
+
+    </ul>
+
     <!-- TRAINING PORTAL-->
     <div id="train-tab" style="display:block; padding:1em;">
         <div class="row">
             <!-- TEXT ENTRY COLUMN -->
             <div style="padding-left:2em" class="col s12 m6 l6">
                 <div class="row">
-                    <div onclick="getWordOnClick('training-txt')" style="background:white; position:relative; height:35rem; top: 0; bottom:1em;" contenteditable="true" id="training-txt" class="editable"></div>
+                    <div onclick="getWordOnClick('training-txt')"
+                        style="background:white; position:relative; height:35rem; top: 0; bottom:1em;"
+                        contenteditable="true" id="training-txt" class="editable"></div>
                 </div>
             </div>
             <!-- TOOLS / UTILITIES COLUMN -->
             <div style="padding-left:2em;line-height:2em;" class="col s12 m6 l6">
-
+                <div class="row">
+                    <div class="col s12">
+                        <button class="btn orange" href="#" onclick="exportJSON()">Download JSON</button>
+                        <button class="btn sidenav-trigger" data-target="training-list">Show Data</button>
+                        <button class="btn sidenav-trigger green" data-target="load-data">Load Data</button>
+                    </div>
+                </div>
                 <div class="row">
                     <ul class="tabs col s12">
-                        <li class="tab"><a href="#load">Load Data</a></li>
                         <li class="tab"><a href="#redact">Train Redaction</a></li>
                         <li class="tab"><a href="#report">Train Reporting</a></li>
-                        <li class="tab"><a href="#" class="sidenav-trigger" data-target="training-list">Show Data</a>
-                        </li>
                     </ul>
-                    <div id="load" style="background:white;" class="col s12">
-                        <h5>
-                            Load Data
-                        </h5>
-                        <div class="row">
-                            <input placeholder="https://... .csv" class="input-field col s6" type="text" id="ext-link">
-                            <span class="col s6"><button class="btn"
-                                    onclick="fetchRemoteCSV('ext-link','training-list','training-txt')">Fetch Remote
-                                    CSV</button></span>
-                        </div>
-                        <br/>
-                        <div class="row">
-                            <input class="input-field col s6" type="file" id="local-link">
-                            <span class="col s6"><button class="btn"
-                                    onclick="localCSV('local-link','training-list','training-txt')">Load Local
-                                    CSV</button></span>
-                        </div>
-                    </div>
                     <div id="report" style="background:white;" class="col s12">
                         <h5>
                             Report Training
@@ -150,8 +165,8 @@
                             <button class="btn red" onclick="saveReport('training-txt','report-list')">Submit
                                 Training</button>
                         </div>
-                        <h4>List of Training Entities</h4>
-                        <ul id="report-list"></ul>
+                        <h6>List of Training Entities</h6>
+                        <ul id="report-list" class="collection"></ul>
                     </div>
                     <div id="redact" style="background:white;" class="col s12">
                         <h5>
@@ -173,8 +188,8 @@
                             <button class="btn red" onclick="saveRedaction('training-txt','redaction-list')">Submit
                                 Training</button>
                         </div>
-                        <h4>List of Training Entities</h4>
-                        <ul id="redaction-list"></ul>
+                        <h6>List of Training Entities</h6>
+                        <ul id="redaction-list" class="collection"></ul>
                     </div>
                 </div>
             </div>
@@ -217,7 +232,8 @@
         var elems = document.querySelectorAll('.sidenav');
         var sidenaveInstances = M.Sidenav.init(elems, {});
 
-        var dataNavInstances = M.Sidenav.init(document.getElementById('training-list'), {edge:"right"});
+        var loadDataInstance = M.Sidenav.init(document.getElementById('load-data'), { edge: "right" });
+        var dataNavInstances = M.Sidenav.init(document.getElementById('training-list'), { edge: "right" });
 
     });
 
