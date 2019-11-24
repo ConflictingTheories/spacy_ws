@@ -22,7 +22,7 @@ from spacy.util import minibatch, compounding
 
 # Labels to Add to model
 LABEL = ['PERSON', 'EMAIL', 'PHONE', 'RACIAL', 'TITLE', 'ADDRESS']
-DATA_DIR = "%s/redact_data" % os.getcwd()
+DATA_DIR = "../training/redact_data"
 TRAINING_DATA = []
 
 # NER Data for Training New data

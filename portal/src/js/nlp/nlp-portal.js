@@ -12,6 +12,11 @@
 ** ------------------------------------------ **
 \*                                            */
 
+// API Constants
+const portal_server = "http://localhost:8081/";
+const nlp_rest_server = "http://localhost:8080/";
+const nlp_ws_server = "ws://localhost:8765/";
+
 // Multi-Data Set
 let redactionSubmission = [];
 let reportingSubmission = [];
@@ -23,7 +28,7 @@ let ws = null;
 
 // Connect to Client Websocket Server
 function connectToWS(listId){
-    ws = new WebSocket("ws://localhost:8765");
+    ws = new WebSocket(nlp_ws_server);
     // On Open
     ws.onopen = function (event) {
         ws.send("Here's some text that the server is urgently awaiting translation!");
@@ -415,10 +420,25 @@ function saveReport(textId, listId) {
 function uploadTraining(url, payload){
     $.ajax({
         type: "POST",
-        url: url,
+        url: `${portal_server}${url}`,
         dataType: 'json',
         contentType: 'application/json',
         data: JSON.stringify(payload),
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (request, status, error) {
+            console.error(error);
+        }
+    });
+}
+
+
+function refreshModel(type){
+    $.ajax({
+        type: "GET",
+        url: `${nlp_rest_server}${type}`,
+        contentType: 'application/json',
         success: function (data) {
             console.log(data);
         },

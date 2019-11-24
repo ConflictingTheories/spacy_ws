@@ -21,7 +21,7 @@ from spacy.util import minibatch, compounding
 
 # Labels to Add to model
 LABEL = ['PERPETRATOR', 'VICTIM', 'LOCATION', 'TIME', 'WEAPON']
-DATA_DIR = "%s/report_data" % os.getcwd()
+DATA_DIR = "../training/report_data"
 TRAINING_DATA = []
 # NER Data for Training New data
 for filename in os.listdir(DATA_DIR):

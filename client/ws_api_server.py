@@ -14,16 +14,33 @@ import spacy
 import json
 import random
 
+import code
 import plac
 from pathlib import Path
+from aiohttp import web
 from spacy.gold import GoldParse
 from spacy.util import minibatch, compounding
+
+import subprocess
 
 # Load English tokenizer, tagger, parser, NER and word vectors
 output_dir = Path('../training/model')
 nlp = spacy.load(output_dir)
 print("Loaded model")
 # nlp = spacy.load("en_core_web_sm")
+
+# Report Training call
+async def handle(request):
+    name = request.match_info.get('name', "redaction")
+    if(name == "redaction" or name == "report"):
+        subprocess.call("../training/generic_"+name+"_spacy_train.py")
+        output_dir = Path('../training/model')
+        nlp = spacy.load(output_dir)
+        print("Re-Loaded model")
+    # Return Msg to
+    text = {"msg":"success"}
+    return web.json_response(text)
+
 
 # Scan WS Msg and Parse with NLP
 async def nlpScan(websocket, path):
@@ -49,8 +66,23 @@ async def nlpScan(websocket, path):
         result = json.dumps(entities)
         await websocket.send(result)
 
+# REST SERVER
+app = web.Application()
+app.router.add_get('/', handle)
+app.router.add_get('/{name}', handle)
+
+# AsyncIO Handler
+loop = asyncio.get_event_loop()
+
 # Run WS Server
 start_server = websockets.serve(nlpScan, "localhost", 8765)
-asyncio.get_event_loop().run_until_complete(start_server)
-asyncio.get_event_loop().run_forever()
+loop.run_until_complete(start_server)
+
+# Run REST Server
+handler = app.make_handler()
+rest_server = loop.create_server(handler, 'localhost', 8080)
+loop.run_until_complete(rest_server)
+
+# Start Servers
+loop.run_forever()
 
