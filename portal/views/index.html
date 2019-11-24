@@ -15,23 +15,25 @@
 -->
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>
-            <%=title%>
-        </title>
-        <!-- Styles -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel='stylesheet' href='/stylesheets/nlpportal.min.css'>
-        <link rel='stylesheet' href='/stylesheets/3rd-party.min.css'>
-    
-        <script src="/javascripts/3rd-party.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-        <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
-        <!-- App Logic -->
-        <script async src="/javascripts/nlpportal.min.js"></script>
-    </head>
+
+<head>
+    <title>
+        <%=title%>
+    </title>
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel='stylesheet' href='/stylesheets/nlpportal.min.css'>
+    <link rel='stylesheet' href='/stylesheets/3rd-party.min.css'>
+
+    <script src="/javascripts/3rd-party.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+    <!-- App Logic -->
+    <script async src="/javascripts/nlpportal.min.js"></script>
+</head>
+
 <body>
     <!-- PRINT BANNER -->
     <div class="show-print">
@@ -60,7 +62,8 @@
             </a>
         </div>
     </nav>
-    <ul style="background-color:whitesmoke; border-bottom:5px #6ad solid;" id="nav-mobile" class="sidenav sidenav-fixed hide-on-large-only no-print" style="transform: translateX(-105%);">
+    <ul style="background-color:whitesmoke; border-bottom:5px #6ad solid;" id="nav-mobile"
+        class="sidenav sidenav-fixed hide-on-large-only no-print" style="transform: translateX(-105%);">
         <li class="logo">
             <a href="/" class="brand-logo">
                 <h4 style="font-weight:bold;color:#6ad;">
@@ -92,70 +95,88 @@
     </ul>
 
     <!-- TRAINING PORTAL-->
-    <div id="train-tab" style="display:block">
+    <div id="train-tab" style="display:block; padding:1em;">
         <div class="row">
             <!-- TEXT ENTRY COLUMN -->
             <div style="padding-left:2em" class="col s12 m6 l6">
                 <div class="row">
-                    <div onclick="getWordOnClick('training-txt')" contenteditable="true" id="training-txt" class="editable materialize-textarea"></div>
+                    <div onclick="getWordOnClick('training-txt')" style="background:white; position:relative; height:35rem; top: 0; bottom:1em;" contenteditable="true" id="training-txt" class="editable"></div>
                 </div>
             </div>
             <!-- TOOLS / UTILITIES COLUMN -->
             <div style="padding-left:2em;line-height:2em;" class="col s12 m6 l6">
-                    <div class="row">
-                            <h5>
-                                    Load Data
-                                </h5>
-                                <div class="row">
-                                    <input placeholder="https://... .csv" class="input-field col s6" type="text" id="ext-link">
-                                    <span class="col s6"><button class="btn" onclick="fetchRemoteCSV('ext-link','training-list','training-txt')">Fetch Remote CSV</button></span>
-                                </div>            
-                                <div class="row">
-                                    <input class="input-field col s6" type="file" id="local-link">
-                                    <span class="col s6"><button class="btn" onclick="localCSV('local-link','training-list','training-txt')">Load Local CSV</button></span>
-                                </div>
-                                <hr/>
-                                <div class="row">
-                                    <a href="#" class="btn sidenav-trigger" data-target="training-list" >Show Loaded Datasets</a>    
-                                </div>
-                        </div>    
+
                 <div class="row">
-                            <ul class="tabs col s12">
-                                <li class="tab"><a href="#redact">Train Redaction</a></li>
-                                <li class="tab"><a href="#report">Train Reporting</a></li>
-                            </ul>
-                            <div id="report" class="col s12">
-                                <h5>
-                                    Report Training
-                                </h5>
-                                <div class="row">
-                                    <button class="btn" onclick="reportSelection('perpetrator','report-list', 'training-txt')">Perpetrator</button>
-                                    <button class="btn" onclick="reportSelection('victim','report-list', 'training-txt')">Victim</button>
-                                    <button class="btn" onclick="reportSelection('location','report-list', 'training-txt')">Location</button>
-                                    <button class="btn" onclick="reportSelection('time','report-list', 'training-txt')">Time</button>
-                                    <button class="btn" onclick="reportSelection('weapon','report-list', 'training-txt')">Weapon</button>
-                                    <button class="btn red" onclick="saveReport('training-txt','report-list')">Submit Training</button>
-                                </div>
-                                <h4>List of Training Entities</h4>
-                                <ul id="report-list"></ul>
-                            </div>
-                            <div id="redact" class="col s12">
-                                <h5>
-                                    Redaction Training
-                                </h5>
-                                <div class="row">
-                                    <button class="btn" onclick="redactSelection('people','redaction-list', 'training-txt')">People</button>
-                                    <button class="btn" onclick="redactSelection('racial','redaction-list', 'training-txt')">Racial</button>
-                                    <button class="btn" onclick="redactSelection('address','redaction-list', 'training-txt')">Address</button>
-                                    <button class="btn" onclick="redactSelection('phone','redaction-list', 'training-txt')">Phone</button>
-                                    <button class="btn" onclick="redactSelection('email','redaction-list', 'training-txt')">Email</button>
-                                    <button class="btn" onclick="redactSelection('title','redaction-list', 'training-txt')">Title</button>
-                                    <button class="btn red" onclick="saveRedaction('training-txt','redaction-list')">Submit Training</button>
-                                </div>
-                                <h4>List of Training Entities</h4>
-                                <ul id="redaction-list"></ul>
-                            </div>
+                    <ul class="tabs col s12">
+                        <li class="tab"><a href="#load">Load Data</a></li>
+                        <li class="tab"><a href="#redact">Train Redaction</a></li>
+                        <li class="tab"><a href="#report">Train Reporting</a></li>
+                        <li class="tab"><a href="#" class="sidenav-trigger" data-target="training-list">Show Data</a>
+                        </li>
+                    </ul>
+                    <div id="load" style="background:white;" class="col s12">
+                        <h5>
+                            Load Data
+                        </h5>
+                        <div class="row">
+                            <input placeholder="https://... .csv" class="input-field col s6" type="text" id="ext-link">
+                            <span class="col s6"><button class="btn"
+                                    onclick="fetchRemoteCSV('ext-link','training-list','training-txt')">Fetch Remote
+                                    CSV</button></span>
                         </div>
+                        <br/>
+                        <div class="row">
+                            <input class="input-field col s6" type="file" id="local-link">
+                            <span class="col s6"><button class="btn"
+                                    onclick="localCSV('local-link','training-list','training-txt')">Load Local
+                                    CSV</button></span>
+                        </div>
+                    </div>
+                    <div id="report" style="background:white;" class="col s12">
+                        <h5>
+                            Report Training
+                        </h5>
+                        <div class="row">
+                            <button class="btn"
+                                onclick="reportSelection('perpetrator','report-list', 'training-txt')">Perpetrator</button>
+                            <button class="btn"
+                                onclick="reportSelection('victim','report-list', 'training-txt')">Victim</button>
+                            <button class="btn"
+                                onclick="reportSelection('location','report-list', 'training-txt')">Location</button>
+                            <button class="btn"
+                                onclick="reportSelection('time','report-list', 'training-txt')">Time</button>
+                            <button class="btn"
+                                onclick="reportSelection('weapon','report-list', 'training-txt')">Weapon</button>
+                            <button class="btn red" onclick="saveReport('training-txt','report-list')">Submit
+                                Training</button>
+                        </div>
+                        <h4>List of Training Entities</h4>
+                        <ul id="report-list"></ul>
+                    </div>
+                    <div id="redact" style="background:white;" class="col s12">
+                        <h5>
+                            Redaction Training
+                        </h5>
+                        <div class="row">
+                            <button class="btn"
+                                onclick="redactSelection('people','redaction-list', 'training-txt')">People</button>
+                            <button class="btn"
+                                onclick="redactSelection('racial','redaction-list', 'training-txt')">Racial</button>
+                            <button class="btn"
+                                onclick="redactSelection('address','redaction-list', 'training-txt')">Address</button>
+                            <button class="btn"
+                                onclick="redactSelection('phone','redaction-list', 'training-txt')">Phone</button>
+                            <button class="btn"
+                                onclick="redactSelection('email','redaction-list', 'training-txt')">Email</button>
+                            <button class="btn"
+                                onclick="redactSelection('title','redaction-list', 'training-txt')">Title</button>
+                            <button class="btn red" onclick="saveRedaction('training-txt','redaction-list')">Submit
+                                Training</button>
+                        </div>
+                        <h4>List of Training Entities</h4>
+                        <ul id="redaction-list"></ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -189,20 +210,22 @@
 
 <script>
     // Nav / Collapse
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         var elems = document.querySelectorAll('.collapsible');
         var collapsibleInstance = M.Collapsible.init(elems, {});
-        
+
         var elems = document.querySelectorAll('.sidenav');
         var sidenaveInstances = M.Sidenav.init(elems, {});
+
+        var dataNavInstances = M.Sidenav.init(document.getElementById('training-list'), {edge:"right"});
 
     });
 
     // On Load
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         $('.tabs').tabs();
-        
+
         // GENERAL / NAVIGATION FUNCTIONS
         // ------------------------------
         let preloaded = '<%=preloaded%>';
