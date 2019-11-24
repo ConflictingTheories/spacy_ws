@@ -49,11 +49,13 @@ function displayTags(msg,listId){
     let msgObj = JSON.parse(msg);
     let tags = Object.keys(msgObj);
     let list = document.getElementById(listId);
-    list.innerHTML = tags.map((x)=>{
+    let bodytags = tags.map((x,i)=>{
         let tokens = msgObj[x];
-        let output = [`<thead>${tags.map(x=>'<th>'+x+'</th>')}</thead>`,`<tbody>${tokens.map((y)=>`<tr><td>${y}</td></tr></tbody>`)}`]
+        let output = [`${tokens.map((y)=>`<tr>${'<td></td>'.repeat(i)}<td>${y}</td>${'<td></td>'.repeat(tags.length-1-i)}</tr>`)}`]
         return output.join('');
-    }).join('');
+    });
+    // Output Table
+    list.innerHTML = [`<thead>${tags.map(x=>'<th>'+x+'</th>')}</thead><tbody>`,...bodytags,`</tbody>`].join('');
 }
 
 // Load Row from Data
@@ -98,8 +100,8 @@ function localCSV(inputId, tableId, textId) {
 }
 
 // Fetch Remote CSV [WIP]
-function remoteRemoteCSV(inputId, textId) {
-
+function remoteRemoteCSV(inputId, tableId, textId) {
+    var dvCSV = document.getElementById(tableId);
     let url = document.getElementById(inputId).value;
 
     $.ajaxPrefilter('script', function (options) {
@@ -112,6 +114,20 @@ function remoteRemoteCSV(inputId, textId) {
         dataType: "script",
         success: function (data) {
             console.log(data);
+            var rows = data.split("\n");
+            for (var i = 0; i < rows.length; i++) {
+                var cells = rows[i].split(",");
+                console.log('Cells,', cells)
+                console.log('Rows', rows);
+                if (cells.length > 0) {
+                    for (var j = 0; j < cells.length; j++) {
+                        var li = document.createElement("li");
+                        li.classList.add('collection-item')
+                        li.innerHTML = `<a style="text-overflow:ellipsis;white-space:nowrap;overflow:hidden;cursor:pointer;" onclick="loadRow(this,'${textId}')">${cells[j]}</a></div>`;
+                        dvCSV.appendChild(li);
+                    }
+                }
+            }
         },
         error: function (request, status, error) {
             console.error(error);
@@ -204,44 +220,6 @@ function getWordOnClick(textId) {
             }
         }
     }
-}
-
-// Add Tags (Styling)
-function addTagSel(tag, idelm) {
-    // https://CoursesWeb.net/javascript/
-    var tag_type = new Array('<', '>');        // for BBCode tag, replace with:  new Array('[', ']');
-    var txta = document.getElementById(idelm);
-    var start = tag_type[0] + tag + tag_type[1];
-    var end = tag_type[0] + '/' + tag + tag_type[1];
-    var IE = /*@cc_on!@*/false;    // this variable is false in all browsers, except IE
-
-    if (IE) {
-        var r = document.selection.createRange();
-        var tr = txta.createTextRange();
-        var tr2 = tr.duplicate();
-        tr2.moveToBookmark(r.getBookmark());
-        tr.setEndPoint('EndToStart', tr2);
-        var tag_seltxt = start + r.text + end;
-        var the_start = txta.value.replace(/[\r\n]/g, '.').indexOf(r.text.replace(/[\r\n]/g, '.'), tr.text.length);
-        txta.value = txta.value.substring(0, the_start) + tag_seltxt + txta.value.substring(the_start + tag_seltxt.length, txta.value.length);
-
-        var pos = txta.value.length - end.length;    // Sets location for cursor position
-        tr.collapse(true);
-        tr.moveEnd('character', pos);        // start position
-        tr.moveStart('character', pos);        // end position
-        tr.select();                 // selects the zone
-    }
-    else if (txta.selectionStart || txta.selectionStart == "0") {
-        var startPos = txta.selectionStart;
-        var endPos = txta.selectionEnd;
-        var tag_seltxt = start + txta.value.substring(startPos, endPos) + end;
-        txta.value = txta.value.substring(0, startPos) + tag_seltxt + txta.value.substring(endPos, txta.value.length);
-
-        // Place the cursor between formats in #txta
-        txta.setSelectionRange((endPos + start.length), (endPos + start.length));
-        txta.focus();
-    }
-    return tag_seltxt;
 }
 
 // Redact Selection and Return Info
@@ -405,7 +383,6 @@ function saveRedaction(textId, listId) {
     clearRedactions(listId)
     console.log(redactionSubmission)
 }
-
 // Save Data Set Learning
 function saveReport(textId, listId) {
     let payload = [
@@ -416,7 +393,7 @@ function saveReport(textId, listId) {
     clearReporting(listId);
     console.log(reportingSubmission)
 }
-
+// Upload New Training Material
 function uploadTraining(url, payload){
     $.ajax({
         type: "POST",
@@ -432,8 +409,7 @@ function uploadTraining(url, payload){
         }
     });
 }
-
-
+// Refresh Model (Retrain)
 function refreshModel(type){
     $.ajax({
         type: "GET",
@@ -448,6 +424,22 @@ function refreshModel(type){
     });
 }
 
+// Refresh Model (Retrain)
+function refreshModel(){
+    $.ajax({
+        type: "GET",
+        url: `${portal_server}/api/retrain/${type}`,
+        contentType: 'application/json',
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (request, status, error) {
+            console.error(error);
+        }
+    });
+}
+
+// Load New Model
 function loadModel(textId){
     let type = document.getElementById(textId).value;
     $.ajax({
@@ -462,7 +454,7 @@ function loadModel(textId){
         }
     });
 }
-
+// Return JSON to browser
 function exportJSON() {
     Swal.fire({
         title: 'Finished Training?',

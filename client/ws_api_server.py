@@ -38,10 +38,14 @@ print("Loaded model")
 async def handleRetrain(request):
     name = request.match_info.get('name', "redaction")
     if(name == "redaction" or name == "report"):
-        subprocess.call("../training/generic_"+name+"_spacy_train.py")
+        subprocess.call(["../training/generic_"+name+"_spacy_train.py"])
         output_dir = Path('../training/model')
         nlp = spacy.load(output_dir)
         print("Re-Loaded model")
+    else:
+        subprocess.call(["../training/generic_"+name+"_spacy_train.py"])
+        output_dir = Path('../training/model')
+        nlp = spacy.load(output_dir)
     # Return Msg to
     text = {"msg":"success"}
     return web.json_response(text)

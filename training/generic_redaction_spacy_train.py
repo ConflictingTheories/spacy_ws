@@ -66,7 +66,7 @@ REVISION_TEXT = [
     output_dir=("Optional output directory", "option", "o", Path),
     n_iter=("Number of training iterations", "option", "n", int))
     
-def main(model=None, new_model_name='weapons', output_dir=None, n_iter=10):
+def main(model=None, new_model_name='nlp-training', output_dir=None, n_iter=10):
     # Load Model
     if model is not None:
         nlp = spacy.load(model)
@@ -124,11 +124,11 @@ def main(model=None, new_model_name='weapons', output_dir=None, n_iter=10):
         print(ent.label_, ent.text)
     
     # Save model 
-    output_dir = Path('./model')
+    output_dir = Path('../training/model')
     if not output_dir.exists():
         output_dir.mkdir()
     nlp.meta['name'] = new_model_name  # rename model
-    nlp.to_disk('./model')
+    nlp.to_disk('../training/model')
     print("Saved model to", output_dir)
 
 if __name__ == '__main__':
