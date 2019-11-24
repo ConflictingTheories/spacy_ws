@@ -207,8 +207,13 @@
             <div style="padding-left:2em;line-height:2em;" class="col s12 m6 l6">
                 <div class="row">
                     <button class="btn green" onclick="connectToWS('list-output-tags')">Connect to Client</button>
-                    <button class="btn green" onclick="refreshModel('redaction')">Retrain Redaction</button>
-                    <button class="btn green" onclick="refreshModel('report')">Retrain Reporting</button>
+                    <button class="btn" onclick="refreshModel('redaction')">Retrain Redaction</button>
+                    <button class="btn" onclick="refreshModel('report')">Retrain Reporting</button>
+                </div>
+                <div class="row">
+                    <input class="input-field col s6" id="model-name">
+                    <button onclick="loadModel('model-name')">Load Model</button>
+                    <table class="col s12" style="width:100%; overflow-y: scroll;" id="list-output-tags"></table>
                 </div>
                 <div class="row">
                     <table class="col s12" style="width:100%; overflow-y: scroll;" id="list-output-tags"></table>

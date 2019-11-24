@@ -13,9 +13,9 @@
 \*                                            */
 
 // API Constants
-const portal_server = "http://localhost:8081/";
-const nlp_rest_server = "http://localhost:8080/";
-const nlp_ws_server = "ws://localhost:8765/";
+const portal_server = "";
+const nlp_rest_server = "http://ssh-001.kderbyma.com:8088/";
+const nlp_ws_server = "ws://ssh-001.kderbyma.com:8765/";
 
 // Multi-Data Set
 let redactionSubmission = [];
@@ -420,7 +420,7 @@ function saveReport(textId, listId) {
 function uploadTraining(url, payload){
     $.ajax({
         type: "POST",
-        url: `${portal_server}${url}`,
+        url: `${portal_server}/${url}`,
         dataType: 'json',
         contentType: 'application/json',
         data: JSON.stringify(payload),
@@ -437,7 +437,22 @@ function uploadTraining(url, payload){
 function refreshModel(type){
     $.ajax({
         type: "GET",
-        url: `${nlp_rest_server}${type}`,
+        url: `${portal_server}/retrain/${type}`,
+        contentType: 'application/json',
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (request, status, error) {
+            console.error(error);
+        }
+    });
+}
+
+function loadModel(textId){
+    let type = document.getElementById(textId).value;
+    $.ajax({
+        type: "GET",
+        url: `${portal_server}/reload/${type}`,
         contentType: 'application/json',
         success: function (data) {
             console.log(data);

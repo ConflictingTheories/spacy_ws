@@ -18,7 +18,7 @@
 var fs = require('fs');
 var express = require('express');
 var router = express.Router();
-var XRP = require('../lib/XRP.lib');
+var request = require('request-promise');
 
 /* GET API List page. */
 router.get('/', function(req, res, next) {
@@ -62,6 +62,18 @@ router.post('/train/report', (req,res,next)=>{
 
     // Then Queue up more training)
 
+});
+
+router.post('/retrain/:name', (req,res,next)=>{
+    console.log(req.params);
+    let name = req.params.name;
+    request(`http://localhost:8080/${name}`)
+})
+
+router.post('/reload/:name', (req,res,next)=>{
+    console.log(req.params);
+    let name = req.params.name;
+    request(`http://localhost:8080/reload/${name}`)
 });
 
 module.exports = router;

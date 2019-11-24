@@ -30,7 +30,7 @@ print("Loaded model")
 # nlp = spacy.load("en_core_web_sm")
 
 # Report Training call
-async def handle(request):
+async def handleRetrain(request):
     name = request.match_info.get('name', "redaction")
     if(name == "redaction" or name == "report"):
         subprocess.call("../training/generic_"+name+"_spacy_train.py")
@@ -38,6 +38,14 @@ async def handle(request):
         nlp = spacy.load(output_dir)
         print("Re-Loaded model")
     # Return Msg to
+    text = {"msg":"success"}
+    return web.json_response(text)
+
+# Report Training call
+async def handleLoad(request):
+    name = request.match_info.get('name', "en_core_web_sm")
+    nlp = spacy.load(name)
+    print("Loaded new Model")
     text = {"msg":"success"}
     return web.json_response(text)
 
@@ -68,19 +76,22 @@ async def nlpScan(websocket, path):
 
 # REST SERVER
 app = web.Application()
-app.router.add_get('/', handle)
-app.router.add_get('/{name}', handle)
+app.router.add_get('/', handleRetrain)
+app.router.add_get('/{name}', handleRetrain)
+
+app.router.add_get('/reload', handleLoad)
+app.router.add_get('/reload/{name}', handleLoad)
 
 # AsyncIO Handler
 loop = asyncio.get_event_loop()
 
 # Run WS Server
-start_server = websockets.serve(nlpScan, "localhost", 8765)
+start_server = websockets.serve(nlpScan, "0.0.0.0", 8765)
 loop.run_until_complete(start_server)
 
 # Run REST Server
 handler = app.make_handler()
-rest_server = loop.create_server(handler, 'localhost', 8080)
+rest_server = loop.create_server(handler, '0.0.0.0', 8080)
 loop.run_until_complete(rest_server)
 
 # Start Servers
