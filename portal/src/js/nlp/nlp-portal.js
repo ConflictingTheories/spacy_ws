@@ -18,6 +18,38 @@ let reportingSubmission = [];
 // Single Data Set
 let redactionList = [];
 let reportingList = [];
+// Webscoket
+let ws = null;
+
+// Connect to Client Websocket Server
+function connectToWS(listId){
+    ws = new WebSocket("ws://localhost:8765");
+    // On Open
+    ws.onopen = function (event) {
+        ws.send("Here's some text that the server is urgently awaiting translation!");
+        ws.onmessage = function (event){
+            let msg = event.data;
+            displayTags(msg,listId);
+            console.log(msg);
+        }
+    };
+}
+
+function sendMsg(textId){
+    let msg = document.getElementById(textId).value;
+    ws.send(msg);
+}
+
+function displayTags(msg,listId){
+    let msgObj = JSON.parse(msg);
+    let tags = Object.keys(msgObj);
+    let list = document.getElementById(listId);
+    list.innerHTML = tags.map((x)=>{
+        let tokens = msgObj[x];
+        let output = [`<thead>${tags.map(x=>'<th>'+x+'</th>')}</thead>`,`<tbody>${tokens.map((y)=>`<tr><td>${y}</td></tr></tbody>`)}`]
+        return output.join('');
+    }).join('');
+}
 
 // Load Row from Data
 function loadRow(button, textId) {

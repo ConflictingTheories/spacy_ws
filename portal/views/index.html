@@ -104,20 +104,18 @@
             </div>
         </li>
         <li class="collection-item">
-                <div class="separator"></div>
-                <label>Remote Data</label>
-                <input placeholder="https://... .csv" class="input-field col s6" type="text" id="ext-link">
-                <button class="btn"
-                        onclick="fetchRemoteCSV('ext-link','training-list','training-txt')">Fetch Remote
-                        CSV</button>
+            <div class="separator"></div>
+            <label>Remote Data</label>
+            <input placeholder="https://... .csv" class="input-field col s6" type="text" id="ext-link">
+            <button class="btn" onclick="fetchRemoteCSV('ext-link','training-list','training-txt')">Fetch Remote
+                CSV</button>
         </li>
         <li class="collection-item">
-                <div class="separator"></div>
-                <label>Local Data</label>
-                <input class="input-field col s6" type="file" id="local-link">
-                <button class="btn"
-                        onclick="localCSV('local-link','training-list','training-txt')">Load Local
-                        CSV</button>
+            <div class="separator"></div>
+            <label>Local Data</label>
+            <input class="input-field col s6" type="file" id="local-link">
+            <button class="btn" onclick="localCSV('local-link','training-list','training-txt')">Load Local
+                CSV</button>
         </li>
 
     </ul>
@@ -197,22 +195,23 @@
     </div>
 
     <!-- TESTING PORTAL-->
-    <div id="test-tab" style="display:none">
+    <div id="test-tab" style="display:none; padding:1em;">
         <div class="row">
             <div style="padding-left:2em" class="col s12 m6 l6">
                 <div class="row">
-                    <textarea contenteditable="true" id="testing-txt" class="editable">
-
-                    </textarea>
+                    <textarea contenteditable="true" id="testing-txt" class="editable"
+                        style="background:white; position:relative; height:35rem; top: 0; bottom:1em;"
+                        onkeyup="sendMsg('testing-txt')"></textarea>
                 </div>
             </div>
             <div style="padding-left:2em;line-height:2em;" class="col s12 m6 l6">
-                <h5>
-                    TESTING CONTROLS
-                </h5>
-                <button onclick="testRedaction()">Test Redaction</button>
+                <button class="btn green" onclick="connectToWS('list-output-tags')">Connect to Client</button>
+                <div class="row">
+                    <table class="col s12" style="width:100%; overflow-y: scroll;" id="list-output-tags"></table>
+                </div>
             </div>
         </div>
+
     </div>
 
     <!-- PRINT BANNER -->
