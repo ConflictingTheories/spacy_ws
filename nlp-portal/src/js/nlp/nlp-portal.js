@@ -236,15 +236,6 @@ function redactSelection(type, listId, textId) {
                 }
                 clearSelection();
                 break;
-            case 'racial':
-                redactionList.push([selectionText.start, selectionText.end, 'RACIAL']);
-                if (listId) {
-                    let dom = document.getElementById(listId).innerHTML;
-                    dom += `<li class="collection-item">[${selectionText.start}, ${selectionText.end}, 'RACIAL']</li>`;
-                    document.getElementById(listId).innerHTML = dom;
-                }
-                clearSelection();
-                break;
             case 'address':
                 redactionList.push([selectionText.start, selectionText.end, 'ADDRESS']);
                 if (listId) {
@@ -272,15 +263,6 @@ function redactSelection(type, listId, textId) {
                 }
                 clearSelection();
                 break;
-            case 'title':
-                redactionList.push([selectionText.start, selectionText.end, 'TITLE'])
-                if (listId) {
-                    let dom = document.getElementById(listId).innerHTML;
-                    dom += `<li class="collection-item">[${selectionText.start}, ${selectionText.end}, 'TITLE']</li>`;
-                    document.getElementById(listId).innerHTML = dom;
-                }
-                clearSelection();
-                break;
             default:
                 Swal.fire({
                     title: 'Missing Information!',
@@ -302,19 +284,10 @@ function reportSelection(type, listId, textId) {
     if (selectionText.start !== selectionText.end) {
         switch (type) {
             case 'perpetrator':
-                reportingList.push([selectionText.start, selectionText.end, 'PERPETRATOR']);
+                reportingList.push([selectionText.start, selectionText.end, 'PERSON']);
                 if (listId) {
                     let dom = document.getElementById(listId).innerHTML;
-                    dom += `<li class="collection-item">[${selectionText.start}, ${selectionText.end}, 'PERPETRATOR']</li>`;
-                    document.getElementById(listId).innerHTML = dom;
-                }
-                clearSelection();
-                break;
-            case 'victim':
-                reportingList.push([selectionText.start, selectionText.end, 'VICTIM']);
-                if (listId) {
-                    let dom = document.getElementById(listId).innerHTML;
-                    dom += `<li class="collection-item">[${selectionText.start}, ${selectionText.end}, 'VICTIM']</li>`;
+                    dom += `<li class="collection-item">[${selectionText.start}, ${selectionText.end}, 'PERSON']</li>`;
                     document.getElementById(listId).innerHTML = dom;
                 }
                 clearSelection();
@@ -338,10 +311,10 @@ function reportSelection(type, listId, textId) {
                 clearSelection();
                 break;
             case 'weapon':
-                reportingList.push([selectionText.start, selectionText.end, 'WEAPON']);
+                reportingList.push([selectionText.start, selectionText.end, 'OBJECT']);
                 if (listId) {
                     let dom = document.getElementById(listId).innerHTML;
-                    dom += `<li class="collection-item">[${selectionText.start}, ${selectionText.end}, 'WEAPON']</li>`;
+                    dom += `<li class="collection-item">[${selectionText.start}, ${selectionText.end}, 'OBJECT']</li>`;
                     document.getElementById(listId).innerHTML = dom;
                 }
                 clearSelection();

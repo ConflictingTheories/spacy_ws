@@ -20,7 +20,7 @@ from spacy.gold import GoldParse
 from spacy.util import minibatch, compounding
 
 # Labels to Add to model
-LABEL = ['PERPETRATOR', 'VICTIM', 'LOCATION', 'TIME', 'WEAPON']
+LABEL = ['PERSON', 'LOCATION', 'TIME', 'OBJECT']
 DATA_DIR = "../nlp-training/report_data"
 TRAINING_DATA = []
 # NER Data for Training New data

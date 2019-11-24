@@ -21,7 +21,7 @@ from spacy.gold import GoldParse
 from spacy.util import minibatch, compounding
 
 # Labels to Add to model
-LABEL = ['PERSON', 'EMAIL', 'PHONE', 'RACIAL', 'TITLE', 'ADDRESS']
+LABEL = ['PERSON', 'EMAIL', 'PHONE', 'TITLE', 'ADDRESS']
 DATA_DIR = "../nlp-training/redact_data"
 TRAINING_DATA = []
 
