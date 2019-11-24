@@ -7,7 +7,6 @@
 #
 # 2019 (c) Kyle Derby MacInnis
 # ============================
-
 import os
 import json
 import plac
@@ -21,10 +20,9 @@ from spacy.gold import GoldParse
 from spacy.util import minibatch, compounding
 
 # Labels to Add to model
-LABEL = ['PERSON', 'EMAIL', 'PHONE', 'RACIAL', 'TITLE', 'ADDRESS']
-DATA_DIR = "../training/redact_data"
+LABEL = ['PERPETRATOR', 'VICTIM', 'LOCATION', 'TIME', 'WEAPON']
+DATA_DIR = "../nlp-training/report_data"
 TRAINING_DATA = []
-
 # NER Data for Training New data
 for filename in os.listdir(DATA_DIR):
     if filename.find(".data.json"):
@@ -62,14 +60,15 @@ REVISION_TEXT = [
 #  ---- TRAINING FUNTION -----
 @plac.annotations(
     model=("Model name. Defaults to 'en' model.", "option", "m", str),
-    new_model_name=("New model name for model meta.", "option", "nm", str),
+    new_model_name=("New model name for model meta.", "option", "c", str),
     output_dir=("Optional output directory", "option", "o", Path),
     n_iter=("Number of training iterations", "option", "n", int))
     
-def main(model=None, new_model_name='en_core_web_sm', output_dir=None, n_iter=10):
+def main(model=None, new_model_name='reporting', output_dir=None, n_iter=10):
+    output_dir = Path('../nlp-training/model')
     # Load Model
     if model is not None:
-        nlp = spacy.load(model)
+        nlp = spacy.load(model).from_disk(output_dir)
     else:
         nlp = spacy.load('en_core_web_sm')
 
@@ -124,11 +123,10 @@ def main(model=None, new_model_name='en_core_web_sm', output_dir=None, n_iter=10
         print(ent.label_, ent.text)
     
     # Save model 
-    output_dir = Path('../training/model')
     if not output_dir.exists():
         output_dir.mkdir()
     nlp.meta['name'] = new_model_name  # rename model
-    nlp.to_disk('../training/model')
+    nlp.to_disk('../nlp-training/model')
     print("Saved model to", output_dir)
 
 if __name__ == '__main__':

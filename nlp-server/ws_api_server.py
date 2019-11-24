@@ -24,11 +24,11 @@ from spacy.util import minibatch, compounding
 import subprocess
 
 # Load English tokenizer, tagger, parser, NER and word vectors
-output_dir = Path('../training/model')
+output_dir = Path('../nlp-training/model')
 if not output_dir.exists():
     output_dir.mkdir()
     nlp = spacy.load('en_core_web_sm')
-    nlp.to_disk('../training/model')
+    nlp.to_disk('../nlp-training/model')
 else:
     nlp = spacy.load(output_dir)
 
@@ -38,10 +38,9 @@ print("Loaded model")
 async def handleRetrain(request):
     name = request.match_info.get('name', "redaction")
     if(name == "redaction" or name == "report"):
-        subprocess.call(["../training/generic_"+name+"_spacy_train.py"])
-        output_dir = Path('../training/model')
+        subprocess.call(["../nlp-training/generic_"+name+"_spacy_train.py","-c%s" % name,"-n 50"])
+        print("Re-Loaded model, --- %s"% output_dir)
         nlp = spacy.load(output_dir)
-        print("Re-Loaded model")
     # Return Msg to
     text = {"msg":"success"}
     return web.json_response(text)
@@ -49,7 +48,7 @@ async def handleRetrain(request):
 # Report Training call
 async def handleLoad(request):
     name = request.match_info.get('name', "en_core_web_sm")
-    nlp = spacy.load(name)
+    nlp = spacy.load(output_dir)
     print("Loaded new Model")
     text = {"msg":"success"}
     return web.json_response(text)
@@ -58,6 +57,7 @@ async def handleLoad(request):
 # Scan WS Msg and Parse with NLP
 async def nlpScan(websocket, path):
     async for msg in websocket:
+        print("{}".format(nlp))
         print("receive < {}".format(msg))
         # Read in and Parse Result (NLP)
         doc = nlp(msg)

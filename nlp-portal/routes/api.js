@@ -29,7 +29,7 @@ router.post('/train/redact', (req,res,next)=>{
     console.log(req.body);
     
     // Save file into Training Folder
-    fs.writeFile(`${__dirname}/../../training/redact_data/${Date.now()}.data.json`,JSON.stringify(req.body),(err)=>{
+    fs.writeFile(`${__dirname}/../../nlp-training/redact_data/${Date.now()}.data.json`,JSON.stringify(req.body),(err)=>{
         if(err){
             console.error(err);
             res.json({
@@ -48,7 +48,7 @@ router.post('/train/redact', (req,res,next)=>{
 router.post('/train/report', (req,res,next)=>{
     console.log(req.body);
     // Save file into Training Folder
-    fs.writeFile(`${__dirname}/../../training/report_data/${Date.now()}.data.json`,JSON.stringify(req.body),(err)=>{
+    fs.writeFile(`${__dirname}/../../nlp-training/report_data/${Date.now()}.data.json`,JSON.stringify(req.body),(err)=>{
         if(err){
             console.error(err);
             res.json({
