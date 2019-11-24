@@ -25,9 +25,14 @@ import subprocess
 
 # Load English tokenizer, tagger, parser, NER and word vectors
 output_dir = Path('../training/model')
-nlp = spacy.load(output_dir)
+if not output_dir.exists():
+    output_dir.mkdir()
+    nlp = spacy.load('en_core_web_sm')
+    nlp.to_disk('../training/model')
+else:
+    nlp = spacy.load(output_dir)
+
 print("Loaded model")
-# nlp = spacy.load("en_core_web_sm")
 
 # Report Training call
 async def handleRetrain(request):

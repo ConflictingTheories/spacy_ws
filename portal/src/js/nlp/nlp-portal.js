@@ -420,7 +420,7 @@ function saveReport(textId, listId) {
 function uploadTraining(url, payload){
     $.ajax({
         type: "POST",
-        url: `${portal_server}/${url}`,
+        url: `${portal_server}${url}`,
         dataType: 'json',
         contentType: 'application/json',
         data: JSON.stringify(payload),
@@ -437,7 +437,7 @@ function uploadTraining(url, payload){
 function refreshModel(type){
     $.ajax({
         type: "GET",
-        url: `${portal_server}/retrain/${type}`,
+        url: `${portal_server}/api/retrain/${type}`,
         contentType: 'application/json',
         success: function (data) {
             console.log(data);
@@ -452,7 +452,7 @@ function loadModel(textId){
     let type = document.getElementById(textId).value;
     $.ajax({
         type: "GET",
-        url: `${portal_server}/reload/${type}`,
+        url: `${portal_server}/api/reload/${type}`,
         contentType: 'application/json',
         success: function (data) {
             console.log(data);

@@ -64,16 +64,18 @@ router.post('/train/report', (req,res,next)=>{
 
 });
 
-router.post('/retrain/:name', (req,res,next)=>{
+router.get('/retrain/:name', (req,res,next)=>{
     console.log(req.params);
     let name = req.params.name;
     request(`http://localhost:8080/${name}`)
+    .then(()=>res.json({msg:"sucess"}))
 })
 
-router.post('/reload/:name', (req,res,next)=>{
+router.get('/reload/:name', (req,res,next)=>{
     console.log(req.params);
     let name = req.params.name;
     request(`http://localhost:8080/reload/${name}`)
+    .then(()=>res.json({msg:"sucess"}))
 });
 
 module.exports = router;
