@@ -25,7 +25,7 @@ from spacy.util import minibatch, compounding
 import subprocess
 
 # Load English tokenizer, tagger, parser, NER and word vectors
-output_dir = Path('../nlp-training/model')
+output_dir = Path('../nlp-training/model/en_core_web_sm')
 if not output_dir.exists():
     output_dir.mkdir()
     nlp = spacy.load('en_core_web_sm')
@@ -40,7 +40,7 @@ async def handleRetrain(request):
     name = request.match_info.get('name', "redaction")
     if(name == "redaction" or name == "report"):
         global nlp
-        model_dir = Path('../nlp-training/model'+name)
+        model_dir = Path('../nlp-training/model/'+name)
         subprocess.call(["../nlp-training/generic_"+name+"_spacy_train.py","-c%s" % name,"-n 50"])
         print("Re-Loaded model, --- %s"% model_dir)
         nlp = spacy.load(model_dir)
@@ -52,7 +52,7 @@ async def handleRetrain(request):
 async def handleLoad(request):
     global nlp
     name = request.match_info.get('name', "en_core_web_sm")
-    model_dir = Path('../nlp-training/model'+name)
+    model_dir = Path('../nlp-training/model/'+name)
     nlp = spacy.load(model_dir)
     print("Loaded new Model")
     text = {"msg":"success"}
