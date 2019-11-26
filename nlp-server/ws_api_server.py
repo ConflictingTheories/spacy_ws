@@ -8,6 +8,7 @@
 # 2019 (c) Kyle Derby MacInnis
 # ============================
 
+import os
 import asyncio
 import websockets
 import spacy
@@ -93,12 +94,12 @@ app.router.add_get('/reload/{name}', handleLoad)
 loop = asyncio.get_event_loop()
 
 # Run WS Server
-start_server = websockets.serve(nlpScan, "0.0.0.0", 8765)
+start_server = websockets.serve(nlpScan, "0.0.0.0", os.environ['WS_PORT'])
 loop.run_until_complete(start_server)
 
 # Run REST Server
 handler = app.make_handler()
-rest_server = loop.create_server(handler, '0.0.0.0', 8080)
+rest_server = loop.create_server(handler, '0.0.0.0', os.environ['INT_NLP_PORT'])
 loop.run_until_complete(rest_server)
 
 # Start Servers

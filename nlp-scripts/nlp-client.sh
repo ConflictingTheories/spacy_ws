@@ -1,6 +1,5 @@
 #!/bin/bash
 
-declare -x MAIN_DIR=$(pwd)
 declare -x LOG_DIR=$MAIN_DIR/logs
 declare -x TRAIN_DIR=$MAIN_DIR/nlp-training
 declare -x PORTAL_DIR=$MAIN_DIR/nlp-portal

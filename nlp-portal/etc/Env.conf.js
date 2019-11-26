@@ -16,16 +16,19 @@
 //        ENVIRONMENT CONF        \\
 \* ------------------------------ */
 
+const process = require('process');
+
 module.exports = {
     AWS_APIKEY: "",
     GOOGLE_APIKEY: "",
     STRIPE_APIKEY: "",
     SENDGRID_APIKEY: "",
-    XRP_HOST: "72.2.58.180",
-    XRP_PORT: "5005",
-    XRP_PROTOCOL: "http://",
+    
+    NLP_HOST: process.env['NLP_HOST'] || "localhost",
+    NLP_PORT: process.env['INT_NLP_PORT'] || 8080,
+    NLP_PROTOCOL: process.env['NLP_PROTOCOL'] || "http://",
 
-    // XRP_HOST: "localhost",
-    XRP_WSS_HOST: "localhost",
-    XRP_WSS_PORT: "6005",
+    WS_HOST: process.env['WS_HOST'] || "localhost",
+    WS_PROTOCOL: process.env['WS_PROTOCOL'] || "ws://",
+    WS_PORT: process.env['WS_PORT'] || 8765
 };

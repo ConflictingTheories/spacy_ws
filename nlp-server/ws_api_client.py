@@ -8,16 +8,17 @@
 # 2019 (c) Kyle Derby MacInnis
 # ============================
 
-
+import os
 import asyncio
 import websockets
 import curses, time
 
 name = ''
-
+# ws_uri = "ws://localhost:8765"
+ws_uri = os.environ['WS_PROTOCOL']+os.environ['WS_HOST']+":"os.environ['WS_PORT']
 #-------------------------------------- (Read CHARs No Keyboard Enter)
 async def read_stdin(name):
-    uri = "ws://localhost:8765"
+    uri = ws_uri
     async with websockets.connect(uri,ping_interval=5) as websocket:
         try:
             stdscr = curses.initscr()

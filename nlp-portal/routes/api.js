@@ -20,6 +20,8 @@ var express = require('express');
 var router = express.Router();
 var request = require('request-promise');
 
+var Env = require('../etc/Env.conf')
+
 /* GET API List page. */
 router.get('/', function(req, res, next) {
     res.render('apilist', { title: 'API - Command List' });
@@ -67,14 +69,14 @@ router.post('/train/report', (req,res,next)=>{
 router.get('/retrain/:name', (req,res,next)=>{
     console.log(req.params);
     let name = req.params.name;
-    request(`http://localhost:8080/${name}`)
+    request(`${Env.NLP_PROTOCOL}localhost:${Env.NLP_PORT}/${name}`)
     .then(()=>res.json({msg:"sucess"}))
 })
 
 router.get('/reload/:name', (req,res,next)=>{
     console.log(req.params);
     let name = req.params.name;
-    request(`http://localhost:8080/reload/${name}`)
+    request(`${Env.NLP_PROTOCOL}localhost:${Env.NLP_PORT}/reload/${name}`)
     .then(()=>res.json({msg:"sucess"}))
 });
 

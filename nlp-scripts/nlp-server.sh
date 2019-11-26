@@ -1,15 +1,12 @@
 #!/bin/bash
 
-declare -x MAIN_DIR=$(pwd)
 declare -x LOG_DIR=$MAIN_DIR/logs
 declare -x TRAIN_DIR=$MAIN_DIR/nlp-training
 declare -x PORTAL_DIR=$MAIN_DIR/nlp-portal
 declare -x CLIENT_DIR=$MAIN_DIR/nlp-server
-
 # Run Client
-cd $TRAIN_DIR
-python generic_redaction_spacy_train.py
-python generic_report_spacy_train.py
+cd $CLIENT_DIR
+python ws_api_server.py
 
 
 
