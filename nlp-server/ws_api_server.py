@@ -38,6 +38,7 @@ print("Loaded model")
 async def handleRetrain(request):
     name = request.match_info.get('name', "redaction")
     if(name == "redaction" or name == "report"):
+        global nlp
         subprocess.call(["../nlp-training/generic_"+name+"_spacy_train.py","-c%s" % name,"-n 50"])
         print("Re-Loaded model, --- %s"% output_dir)
         nlp = spacy.load(output_dir)
@@ -47,6 +48,7 @@ async def handleRetrain(request):
 
 # Report Training call
 async def handleLoad(request):
+    global nlp
     name = request.match_info.get('name', "en_core_web_sm")
     nlp = spacy.load(output_dir)
     print("Loaded new Model")
