@@ -64,8 +64,8 @@ REVISION_TEXT = [
     output_dir=("Optional output directory", "option", "o", Path),
     n_iter=("Number of training iterations", "option", "n", int))
     
-def main(model=None, new_model_name='reporting', output_dir=None, n_iter=10):
-    output_dir = Path('../nlp-training/model/reporting')
+def main(model=None, new_model_name='report', output_dir=None, n_iter=10):
+    output_dir = Path('../nlp-training/model/report')
     # Load Model
     if model is not None:
         nlp = spacy.load(output_dir)

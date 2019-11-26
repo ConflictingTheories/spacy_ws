@@ -29,7 +29,7 @@ output_dir = Path('../nlp-training/model')
 if not output_dir.exists():
     output_dir.mkdir()
     nlp = spacy.load('en_core_web_sm')
-    nlp.to_disk('../nlp-training/model')
+    nlp.to_disk('../nlp-training/model/en_core_web_sm')
 else:
     nlp = spacy.load(output_dir)
 
@@ -40,9 +40,10 @@ async def handleRetrain(request):
     name = request.match_info.get('name', "redaction")
     if(name == "redaction" or name == "report"):
         global nlp
+        model_dir = Path('../nlp-training/model'+name)
         subprocess.call(["../nlp-training/generic_"+name+"_spacy_train.py","-c%s" % name,"-n 50"])
-        print("Re-Loaded model, --- %s"% output_dir)
-        nlp = spacy.load(output_dir)
+        print("Re-Loaded model, --- %s"% model_dir)
+        nlp = spacy.load(model_dir)
     # Return Msg to
     text = {"msg":"success"}
     return web.json_response(text)
@@ -51,7 +52,8 @@ async def handleRetrain(request):
 async def handleLoad(request):
     global nlp
     name = request.match_info.get('name', "en_core_web_sm")
-    nlp = spacy.load(output_dir)
+    model_dir = Path('../nlp-training/model'+name)
+    nlp = spacy.load(model_dir)
     print("Loaded new Model")
     text = {"msg":"success"}
     return web.json_response(text)
