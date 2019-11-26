@@ -10,25 +10,16 @@ Client opens a connection to the server - then it allows the user to type and wh
 
         # setup
         sudo setup.sh
+        ./run.sh
 
-        # in first tab
-        cd server
-        ./ws_api_server.py
-
-        # in other tab
-        cd server
-        ./ws_api_client.py
+This opens a portal on your localhost which you can access from your web browser. It will allow you load data sets, code entities, and load different models and test them.
 
 # Training
 Shows an example of training a new dataset - very basic example. Data learned is trained and stored in the model folder.
 
         # setup
         sudo setup.sh
-
-        # run training example
-        cd training
-        ./weapon_spacy_train.py
-
+        ./train.sh
 
 # Mentions / usage
 Created by Kyle Derby MacInnis for the purpose of learning. Please use to learn, but if using code, please reference me as the author.
