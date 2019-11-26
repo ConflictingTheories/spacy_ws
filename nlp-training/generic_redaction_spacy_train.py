@@ -67,10 +67,10 @@ REVISION_TEXT = [
     n_iter=("Number of training iterations", "option", "n", int))
     
 def main(model=None, new_model_name='redaction', output_dir=None, n_iter=10):
-    output_dir = Path('../nlp-training/model')
+    output_dir = Path('../nlp-training/model/redaction')
     # Load Model
     if model is not None:
-        nlp = spacy.load(model).fromDisk(output_dir)
+        nlp = spacy.load(output_dir)
     else:
         nlp = spacy.load('en_core_web_sm')
 
@@ -128,7 +128,7 @@ def main(model=None, new_model_name='redaction', output_dir=None, n_iter=10):
     if not output_dir.exists():
         output_dir.mkdir()
     nlp.meta['name'] = new_model_name  # rename model
-    nlp.to_disk('../nlp-training/model')
+    nlp.to_disk(output_dir)
     print("Saved model to", output_dir)
 
 if __name__ == '__main__':
