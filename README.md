@@ -23,3 +23,6 @@ Shows an example of training a new dataset - very basic example. Data learned is
 
 # Mentions / usage
 Created by Kyle Derby MacInnis for the purpose of learning. Please use to learn, but if using code, please reference me as the author.
+
+
+        copyright (c) 2019 Kyle Derby MacInnis
